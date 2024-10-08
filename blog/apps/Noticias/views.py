@@ -125,4 +125,4 @@ def Login(request):
 def Logout(request):
     logout(request)
     messages.success(request, "Successfully logged out")
-    return redirect('/login')
+    return redirect('/Noticias/login')

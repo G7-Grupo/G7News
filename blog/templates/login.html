@@ -6,7 +6,7 @@
 {% block css %}
 {% endblock %}
 {% block body %}
-<form action="/login/" method="POST"> {% csrf_token %}
+<form action="{% url 'Noticias:login' %}" method="POST"> {% csrf_token %}
   <div class="container mt-5">
   <div class="mb-3">
     <label for="username" class="form-label">Username</label>
