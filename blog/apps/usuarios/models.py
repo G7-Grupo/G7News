@@ -18,12 +18,14 @@ class Profile(models.Model):
 
 class BlogPost(models.Model):
     title=models.CharField(max_length=255)
-    # author= models.ForeignKey(User, on_delete=models.CASCADE)
     slug=models.CharField(max_length=130)
     content=models.TextField()
     image = models.ImageField(upload_to="profile_pics", blank=True, null=True)
     dateTime=models.DateTimeField(auto_now_add=True)
+    # author= models.ForeignKey(User, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usuarios_blogposts')  # Cambiar el related_name
+    # author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='noticias_blogposts') # esto aria que no fuese obligatorio el campo
+    #  
     
     def __str__(self):
         return str(self.author) +  " Blog Title: " + self.title
