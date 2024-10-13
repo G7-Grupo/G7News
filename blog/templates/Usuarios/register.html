@@ -6,7 +6,7 @@
 {% block css %}
 {% endblock %}
 {% block content %}
-<form action="/register/" method="POST"> {% csrf_token %}
+<form action="{% url 'apps.usuarios:register' %}" method="POST"> {% csrf_token %}
     <div class="container mt-5">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>

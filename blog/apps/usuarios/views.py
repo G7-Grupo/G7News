@@ -21,10 +21,10 @@ def add_blogs(request):
             blogpost.save()
             obj = form.instance
             alert = True
-            return render(request, "add_blogs.html",{'obj':obj, 'alert':alert})
+            return render(request, "usuarios/add_blogs.html",{'obj':obj, 'alert':alert})
     else:
         form=BlogPostForm()
-    return render(request, "add_blogs.html", {'form':form})
+    return render(request, "usuarios/add_blogs.html", {'form':form})
 
 
 def user_profile(request, myid):
@@ -61,7 +61,7 @@ def Register(request):
         
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
-            return redirect('/register')
+            return redirect('register')
         
         user = User.objects.create_user(username, email, password1)
         user.first_name = first_name
@@ -89,4 +89,4 @@ def Login(request):
 def Logout(request):
     logout(request)
     messages.success(request, "Successfully logged out")
-    return redirect('/login')
+    return redirect('/usuarios/login')
