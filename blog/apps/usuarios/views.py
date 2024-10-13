@@ -67,8 +67,8 @@ def Register(request):
         user.first_name = first_name
         user.last_name = last_name
         user.save()
-        return render(request, 'login.html')   
-    return render(request, "register.html")
+        return render(request, 'usuarios/login.html')   
+    return render(request, "usuarios/register.html")
 
 def Login(request):
     if request.method=="POST":
@@ -84,7 +84,7 @@ def Login(request):
         else:
             messages.error(request, "Invalid Credentials")
         return render(request, 'blog.html')   
-    return render(request, "login.html")
+    return render(request, "usuarios/login.html")
 
 def Logout(request):
     logout(request)

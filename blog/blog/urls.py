@@ -24,5 +24,6 @@ urlpatterns = [
     path('',views.Index, name = 'base'),
     path('Contact/', views.Contact),
     path('Noticias/', include('apps.Noticias.urls')),
+    path('usuarios/', include('apps.usuarios.urls')),
 
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -79,10 +79,10 @@
               </li>
               {% else %}
               <li class="nav-item">
-                <a class="nav-link {% block registeractive %} {% endblock registeractive %}" href="/register/">Register</a>
+                <a class="nav-link {% block registeractive %} {% endblock registeractive %}" href="{% url 'apps.usuarios:register' %}">Register</a>
               </li>
                <li class="nav-item">
-                <a class="nav-link {% block loginactive %} {% endblock loginactive %}" href="/login/">Login</a>
+                <a class="nav-link {% block loginactive %} {% endblock loginactive %}" href= "{% url 'apps.usuarios:login' %}">Login</a>
               </li>
               {% endif %}
             </ul>
