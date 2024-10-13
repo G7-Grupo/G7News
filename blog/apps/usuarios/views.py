@@ -32,7 +32,7 @@ def user_profile(request, myid):
     return render(request, "user_profile.html", {'post':post})
 
 def Profile(request):
-    return render(request, "profile.html")
+    return render(request, "usuarios/profile.html")
 
 def edit_profile(request):
     try:
@@ -44,10 +44,10 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             alert = True
-            return render(request, "edit_profile.html", {'alert':alert})
+            return render(request, "usuarios/edit_profile.html", {'alert':alert})
     else:
         form=ProfileForm(instance=profile)
-    return render(request, "edit_profile.html", {'form':form})
+    return render(request, "usuarios/edit_profile.html", {'form':form})
 
 
 def Register(request):

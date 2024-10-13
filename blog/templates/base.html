@@ -71,7 +71,7 @@
                     <a class="nav-link active" href="#">Hello {{request.user}}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% block profileactive %} {% endblock profileactive %}" href="/profile/">Profile</a>
+                    <a class="nav-link {% block profileactive %} {% endblock profileactive %}" href="{% url 'apps.usuarios:profile' %}">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'apps.usuarios:logout' %}">Logout</a>

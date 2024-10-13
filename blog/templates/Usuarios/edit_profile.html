@@ -4,8 +4,8 @@
 
 {% block css %}
 {% endblock %}
-{% block body %}
-<form action="/edit_profile/" enctype="multipart/form-data" method="POST"> {% csrf_token %}
+{% block content %}
+<form action="{% url 'apps.usuarios:edit_profile' %}" enctype="multipart/form-data" method="POST"> {% csrf_token %}
     <div class="container mt-3">
    {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Update</button>
