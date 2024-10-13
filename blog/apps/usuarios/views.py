@@ -29,9 +29,9 @@ def add_blogs(request):
 
 def user_profile(request, myid):
     post = BlogPost.objects.filter(id=myid)
-    return render(request, "user_profile.html", {'post':post})
+    return render(request, "usuarios/user_profile.html", {'post':post})
 
-def Profile(request):
+def profile(request):
     return render(request, "usuarios/profile.html")
 
 def edit_profile(request):
@@ -44,7 +44,7 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             alert = True
-            return render(request, "usuarios/edit_profile.html", {'alert':alert})
+            return render(request, "usuarios/profile.html", {'alert':alert})
     else:
         form=ProfileForm(instance=profile)
     return render(request, "usuarios/edit_profile.html", {'form':form})

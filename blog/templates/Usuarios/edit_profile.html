@@ -13,10 +13,11 @@
 </form>
 {% endblock %}
 {% block js %}
+
 <script>
     {% if alert %}
-    alert('Your Profile has been updated successfully.');
-    document.location = '/profile/';
+        alert('Your Profile has been updated successfully.');
+        document.location = '/profile/';
     {% endif %}
 </script>
 {% endblock %}
