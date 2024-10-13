@@ -10,7 +10,9 @@ class BlogPost(models.Model):
     content=models.TextField()
     image = models.ImageField(upload_to="profile_pics", blank=True, null=True)
     dateTime=models.DateTimeField(auto_now_add=True)
-    
+    # author = models.ForeignKey(User, on_delete=models.CASCADE)  # línea intento solucionalr no se pueda crear posteo
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='noticias_blogposts')  # Cambiar el related_name
+
     def __str__(self):
         return str(self.author) +  " Blog Title: " + self.title
     
