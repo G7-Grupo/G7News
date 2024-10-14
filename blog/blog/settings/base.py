@@ -27,8 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    'apps.Noticias',
-    'apps.usuarios',
+    'apps.home',
 ]
 
 
@@ -43,7 +42,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'blog.urls'
+ROOT_URLCONF = 'Blog.urls'
 
 TEMPLATES = [
     {
@@ -61,7 +60,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'blog.wsgi.application'
+WSGI_APPLICATION = 'Blog.wsgi.application'
 
 
 
