@@ -1,0 +1,371 @@
+{% load static %}
+<script type="text/javascript" src="{{ STATIC_URL }} /static/jquery-1.8.0.js"></script>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title> {% block title %} G7News - Noticias y Actualidad {% endblock %} </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+
+
+</head>
+
+<body>
+    <style>
+        /* Estilo para el nav con un fondo de gradiente y sombra */
+        .navbar {
+            background: linear-gradient(180deg, #333, #111);
+            box-shadow:
+                5px 5px 15px rgba(26, 26, 26, 0.6),
+                -5px -5px 15px rgba(68, 68, 68, 0.6);
+        }
+
+        /* Estilo para los botones */
+        .nav-link {
+            border-radius: 25px;
+            /* Aumenta el radio para bordes más redondeados */
+            padding: 1px 3px;
+            /* Margen más ajustado con respecto a las letras */
+            transition: background 0.3s;
+            /* Efecto de transición suave */
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            /* Efecto hover con fondo claro */
+        }
+
+        /* Estilo para el botón de búsqueda */
+        .btn-outline-secondary {
+            border-radius: 10px;
+            color: white;
+            /* Color de texto blanco */
+            border-color: white;
+            /* Color del borde blanco */
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Efecto hover */
+        }
+
+        /* Cambio del color de las letras "News" */
+        .text-primary {
+            color: yellow !important;
+            /* Cambia "G7" a color blanco */
+        }
+
+        .text-secondary {
+            color: white !important;
+            /* Cambia "News" a color blanco */
+        }
+    </style>
+    <!-- Breaking News End -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <h1 class="m-0 display-4 text-uppercase text-primary">G7<span
+                    class="text-secondary font-weight-normal">News</span></h1>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="container mx-3">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link {% block homeactive %} {% endblock homeactive %}" aria-current="page"
+                                href="/">Home</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categorías</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="#" class="dropdown-item">Política 🏛️</a>
+                                <a href="#" class="dropdown-item">Deportes 🏆</a>
+                                <a href="#" class="dropdown-item">Salud ⚕️</a>
+                                <a href="#" class="dropdown-item">Ciencia ⚗️</a>
+                                <a href="#" class="dropdown-item">Tecnología 👨‍💻</a>
+                                <a href="#" class="dropdown-item">Rincón Gamer 🎮</a>
+                            </div>
+                        </div>
+                        <li class="nav-item">
+                            <a class="nav-link {% block add_blogs_active %} {% endblock add_blogs_active %}"
+                                href="{% url 'apps.usuarios:add_blogs' %}">Add Blogs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Hello {{request.user}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% block profileactive %} {% endblock profileactive %}"
+                                href="{% url 'apps.usuarios:profile' %}">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'apps.usuarios:logout' %}">Logout</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link {% block registeractive %} {% endblock registeractive %}"
+                                href="{% url 'apps.usuarios:register' %}">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% block loginactive %} {% endblock loginactive %}"
+                                href="{% url 'apps.usuarios:login' %}">Login</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <form class="d-flex" method="POST" action="/search/"> {% csrf_token %}
+                    <input class="form-control me-2" type="search" placeholder="Search" name="searched" id="searched"
+                        aria-label="Search">
+                    <button href="/search/" class="btn btn-outline-secondary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid bg-dark py-3 mb-3">
+        <div class="row align-items-center bg-dark w-80">
+            <div class="col-12">
+                <div class="d-flex justify-content-between">
+                    <div class="bg-primary text-dark text-center font-weight-medium py-2" style="width: 190px;">
+                        Novedades
+                    </div>
+                    <div class="owl-carousel tranding-carousel position-relative d-inline-flex align-items-center ml-3"
+                        style="flex-grow: 4; padding-right: 90px;">
+                        <div class="text-truncate">
+                            <a class="text-white text-uppercase font-weight-semi-bold" href="">Siempre informado sobre
+                                las noticias que inspiran y generan cambio. ¡Juntos hacemos la diferencia!</a>
+                        </div>
+                        <div class="text-truncate">
+                            <a class="text-white text-uppercase font-weight-semi-bold" href="">Siempre informado sobre
+                                las noticias que inspiran y generan cambio. ¡Juntos hacemos la diferencia!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <main>
+        {% block content %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-7 px-0">
+                    <div class="owl-carousel main-carousel position-relative">
+                        <div class="position-relative overflow-hidden" style="height: 500px;">
+                            <img class="img-fluid h-100" src="{% static 'img/news-800x500-1.jpg' %}"
+                                style="object-fit: cover;">
+                            <div class="overlay">
+                                <div class="mb-2">
+                                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                        href="">Business</a>
+                                    <a class="text-white" href="">Jan 01, 2045</a>
+                                </div>
+                                <a class="h2 m-0 text-white text-uppercase font-weight-bold" href="">Lorem ipsum dolor
+                                    sit amet elit. Proin vitae porta diam...</a>
+                            </div>
+                        </div>
+                        <div class="position-relative overflow-hidden" style="height: 500px;">
+                            <img class="img-fluid h-100" src="{% static 'img/news-800x500-2.jpg' %}"
+                                style="object-fit: cover;">
+                            <div class="overlay">
+                                <div class="mb-2">
+                                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                        href="">Business</a>
+                                    <a class="text-white" href="">Jan 01, 2045</a>
+                                </div>
+                                <a class="h2 m-0 text-white text-uppercase font-weight-bold" href="">Lorem ipsum dolor
+                                    sit amet elit. Proin vitae porta diam...</a>
+                            </div>
+                        </div>
+                        <div class="position-relative overflow-hidden" style="height: 500px;">
+                            <img class="img-fluid h-100" src="{% static 'img/news-800x500-3.jpg' %}"
+                                style="object-fit: cover;">
+                            <div class="overlay">
+                                <div class="mb-2">
+                                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                        href="">Business</a>
+                                    <a class="text-white" href="">Jan 01, 2045</a>
+                                </div>
+                                <a class="h2 m-0 text-white text-uppercase font-weight-bold" href="">Lorem ipsum dolor
+                                    sit amet elit. Proin vitae porta diam...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 px-0">
+                    <div class="row mx-0">
+                        <div class="col-md-6 px-0">
+                            <div class="position-relative overflow-hidden" style="height: 250px;">
+                                <img class="img-fluid w-100 h-100" src="{% static 'img/news-700x435-1.jpg' %}"
+                                    style="object-fit: cover;">
+                                <div class="overlay">
+                                    <div class="mb-2">
+                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                            href="">Business</a>
+                                        <a class="text-white" href=""><small>Jan 01, 2045</small></a>
+                                    </div>
+                                    <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="">Lorem
+                                        ipsum dolor sit amet elit...</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 px-0">
+                            <div class="position-relative overflow-hidden" style="height: 250px;">
+                                <img class="img-fluid w-100 h-100" src="{% static 'img/news-700x435-2.jpg' %}"
+                                    style="object-fit: cover;">
+                                <div class="overlay">
+                                    <div class="mb-2">
+                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                            href="">Business</a>
+                                        <a class="text-white" href=""><small>Jan 01, 2045</small></a>
+                                    </div>
+                                    <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="">Lorem
+                                        ipsum dolor sit amet elit...</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 px-0">
+                            <div class="position-relative overflow-hidden" style="height: 250px;">
+                                <img class="img-fluid w-100 h-100" src="{% static 'img/news-700x435-3.jpg' %}"
+                                    style="object-fit: cover;">
+                                <div class="overlay">
+                                    <div class="mb-2">
+                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                            href="">Business</a>
+                                        <a class="text-white" href=""><small>Jan 01, 2045</small></a>
+                                    </div>
+                                    <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="">Lorem
+                                        ipsum dolor sit amet elit...</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 px-0">
+                            <div class="position-relative overflow-hidden" style="height: 250px;">
+                                <img class="img-fluid w-100 h-100" src="{% static 'img/news-700x435-4.jpg' %}"
+                                    style="object-fit: cover;">
+                                <div class="overlay">
+                                    <div class="mb-2">
+                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                            href="">Business</a>
+                                        <a class="text-white" href=""><small>Jan 01, 2045</small></a>
+                                    </div>
+                                    <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="">Lorem
+                                        ipsum dolor sit amet elit...</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </main>
+    <div class="container-fluid bg-dark pt-5 px-sm-3 px-md-5 mt-5">
+        <div class="row py-4 justify-content-center">
+            <div class="col-lg-6 col-md-8 text-center">
+                <h5 class="mb-4 text-white text-uppercase font-weight-bold">Contáctanos</h5>
+                <p class="font-weight-medium"><i class="fa fa-map-marker-alt mr-2"></i>Resistencia, Chaco, Argentina.</p>
+                <p class="font-weight-medium"><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
+                <p class="font-weight-medium"><i class="fa fa-envelope mr-2"></i>info@g7news.com</p>
+                <h6 class="mt-4 mb-3 text-white text-uppercase font-weight-bold">Síguenos</h6>
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-lg btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-lg btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-lg btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-lg btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-lg btn-secondary btn-lg-square" href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="row py-4 justify-content-center">
+            <div class="col-lg-6 col-md-4 text-center">
+                <div class="tdm_block td_block_wrap tdm_block_inline_text tdi_71 tdm-inline-block td-pb-border-top td_block_template_4" data-td-block-uid="tdi_71">
+                    <p class="tdm-descr">Desarrolladores</p>
+                    <p class="tdm-descr">Emilio Rojas - BackEnd</p>
+                    <p class="tdm-descr">Agustín Roman - BackEnd</p>
+                    <p class="tdm-descr">Luis Zampaino - BackEnd</p>
+                    <p class="tdm-descr">Alejandro Suarez - FrontEnd</p>
+                    <p class="tdm-descr">Pablo Aguirre - FrontEnd</p>
+                    <p class="tdm-descr">Martín Sena - FrontEnd</p>
+                </div>
+            </div>
+        </div>
+    </div>    
+        {% block body %}
+        {% endblock %}
+        <div class="container-fluid py-4 px-sm-3 px-md-5" style="background: #111111;">
+            <p class="m-0 text-center">&copy; <a href="#">G7News</a>. © Copyright 2024 G7News | Todos los derechos
+                reservados.
+
+                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                Dirección Nacional del Derecho de Autor DNDA <a href="#">Queda prohibida la reproducción total o parcial
+                    del presente diario.</a>
+            </p>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+        <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+        <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+
+        <!-- Template Javascript -->
+        <script src="{% static 'js/main.js' %}"></script>
+
+        <script>
+            $(document).ready(function () {
+                $(".owl-carousel").owlCarousel();
+
+            })
+        </script>
+
+        <script>
+            $('.owl-carousel').owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: true,
+
+            })
+
+        </script>
+
+        {% block js %}
+        {% endblock %}
+</body>
+
+</html>
