@@ -18,6 +18,8 @@
                     <h5 class="card-title">{{post.title}} <br><small>by {{post.author}}</small></h5>
                     <p class="card-text">{{post.content|truncatechars:210}}</p>
                     <a href="{% url 'apps.Noticias:blogs_comments' post.slug %}" class="btn btn-primary">Read More</a>
+                    {% if user.is_superuser %}<a href="{% url 'apps.Noticias:delete_blog_post'  post.id %}" class="btn btn-danger mx-4">Delete Blog</a>{% endif %}</a>
+                </div>
                 </div>
             </div>
         </div>
