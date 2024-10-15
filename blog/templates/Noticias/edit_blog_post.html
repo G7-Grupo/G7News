@@ -4,7 +4,7 @@
 
 {% block css %}
 {% endblock %}
-{% block body %}
+{% block content %}
 <form enctype="multipart/form-data" method="POST"> {% csrf_token %}
 <div class="container mt-4">
 {{ form.as_p }}

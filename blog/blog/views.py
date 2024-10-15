@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def Index(request):
 
-    return render(request,'base.html')
+    return redirect('apps.Noticias:blogs')
 
 def Contact(request):
 

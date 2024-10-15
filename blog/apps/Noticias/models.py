@@ -6,6 +6,7 @@ from django.utils.timezone import now
 
 class BlogPost(models.Model):
     title=models.CharField(max_length=255)
+    author= models.ForeignKey(User, on_delete=models.CASCADE)
     slug=models.CharField(max_length=130)
     content=models.TextField()
     image = models.ImageField(upload_to="profile_pics", blank=True, null=True)
@@ -16,6 +17,8 @@ class BlogPost(models.Model):
     
     def get_absolute_url(self):
         return reverse('blogs')
+
+
     
     
 class Comment(models.Model):

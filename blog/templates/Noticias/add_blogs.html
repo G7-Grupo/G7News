@@ -1,13 +1,24 @@
 {% extends 'base.html' %}
-{% block title %}Añadir Blog{% endblock %}
-{% block body %}
-<div class="container mt-3">
-    <h2>Añadir Nuevo Blog</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Agregar Blog</button>
-    </form>
-</div>
-{% endblock %}
 
+{% block title %} Profile {% endblock %}
+{% block add_blogs_active %} active {% endblock add_blogs_active %}
+
+{% block css %}
+{% endblock %}
+{% block content %}
+<form action="{% url 'apps.Noticias:add_blogs' %}" enctype="multipart/form-data" method="POST"> {% csrf_token %}
+<div class="container mt-4">
+{{ form.as_p }}
+<button class="btn btn-primary">Add Blog</button>
+</div>
+</form>
+{% endblock %}
+{% block js %}
+<script>
+    
+    {% if alert %}
+    alert('Your Blog is added successfully.');
+    document.location = '/';
+    {% endif %}
+</script>
+{% endblock %}

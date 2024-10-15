@@ -11,20 +11,7 @@ from django.contrib import messages
 
 
 # Create your views here.
-@login_required(login_url = '/login')
-def add_blogs(request):
-    if request.method=="POST":
-        form = BlogPostForm(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            blogpost = form.save(commit=False)
-            blogpost.author = request.user
-            blogpost.save()
-            obj = form.instance
-            alert = True
-            return render(request, "usuarios/add_blogs.html",{'obj':obj, 'alert':alert})
-    else:
-        form=BlogPostForm()
-    return render(request, "usuarios/add_blogs.html", {'form':form})
+
 
 
 def user_profile(request, myid):
@@ -83,7 +70,7 @@ def Login(request):
             return redirect("/")
         else:
             messages.error(request, "Invalid Credentials")
-        return render(request, 'blog.html')   
+        return render(request, 'usuarios/login.html')   
     return render(request, "usuarios/login.html")
 
 def Logout(request):

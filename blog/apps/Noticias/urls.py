@@ -3,7 +3,7 @@ from django.urls import path
 from . import views
 from .views import UpdatePostView
 
-app_name = 'Noticias'
+app_name = 'apps.Noticias'
 
 urlpatterns = [
 #     blogs
