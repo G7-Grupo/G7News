@@ -26,8 +26,8 @@ def blogs_comments(request, slug):
         comment.save()
     return render(request, "Noticias/blog_comments.html", {'post':post, 'comments':comments})
 
-def Delete_Blog_Post(request, slug):
-    posts = BlogPost.objects.get(slug=slug)
+def Delete_Blog_Post(request, pk):
+    posts = BlogPost.objects.get(id=pk)
     if request.method == "POST":
         posts.delete()
         return redirect('/')
