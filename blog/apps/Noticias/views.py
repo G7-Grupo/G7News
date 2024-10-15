@@ -26,6 +26,7 @@ def blogs_comments(request, slug):
         comment.save()
     return render(request, "Noticias/blog_comments.html", {'post':post, 'comments':comments})
 
+@login_required(login_url='/login')
 def Delete_Blog_Post(request, pk):
     posts = BlogPost.objects.get(id=pk)
     if request.method == "POST":
@@ -77,3 +78,4 @@ class UpdatePostView(UpdateView):
     def form_valid(self, form):
         form.save()
         return redirect(reverse('apps.Noticias:blogs'))
+
