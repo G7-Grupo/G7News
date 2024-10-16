@@ -83,9 +83,143 @@
             color: white !important;
             /* Cambia "News" a color blanco */
         }
+
+        .owl-carousel .owl-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 30px;
+            /* Ajusta esto según tus necesidades */
+        }
+
+        .owl-carousel .text-truncate {
+            width: 100%;
+            text-align: center;
+        }
+
+        #date-time {
+            flex-basis: 20%;
+            /* Reservamos espacio para la fecha y la hora */
+            text-align: right;
+            /* Alineamos el texto a la derecha */
+            white-space: nowrap;
+        }
+
+        .nav-link {
+            flex-basis: 10%;
+            /* Aseguramos que el botón "Novedades" conserve su tamaño */
+        }
+
+        .container-fluid {
+            max-width: 100%;
+            /* Asegura que no se extienda fuera de la pantalla */
+        }
+
+        .owl-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+        }
+
+        .owl-next {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.5) !important;
+            color: white !important;
+            padding: 5px 10px !important;
+        }
+
+        .owl-prev {
+            left: 0;
+        }
+
+        .owl-next {
+            right: 0;
+        }
+
+        .watermark-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .watermark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-content: space-around;
+            opacity: 0.15;
+            transform: rotate(-30deg);
+        }
+
+        .watermark-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .watermark-text {
+            font-size: 24px;
+            color: #000;
+            display: flex;
+            align-items: center;
+        }
+
+        .watermark-text .text-primary {
+            color: #000000 !important;
+            /* Un azul más visible */
+        }
+
+        .watermark-text .text-secondary {
+            color: #050505 !important;
+            /* Un gris más visible */
+        }
+
+        .watermark-logo {
+            width: 80px;
+            height: auto;
+            margin-left: 10px;
+        }
+
+        /* Estilos para la columna de publicidad */
+        .post-container {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-container h4 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .post-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .sticky-sidebar {
+            position: sticky;
+            top: 0;
+            padding-top: 20px;
+        }
     </style>
     <!-- Breaking News End -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top main-navbar">
         <div class="container-fluid">
             <h1 class="m-0 display-4 text-uppercase text-primary">G7<span
                     class="text-secondary font-weight-normal">News</span></h1>
@@ -99,7 +233,7 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link {% block homeactive %} {% endblock homeactive %}" aria-current="page"
-                                href="/">Home</a>
+                                href="/">Inicio</a>
                         </li>
                         {% if user.is_authenticated %}
                         <div class="nav-item dropdown">
@@ -115,133 +249,198 @@
                         </div>
                         <li class="nav-item">
                             <a class="nav-link {% block add_blogs_active %} {% endblock add_blogs_active %}"
-                                href="{% url 'apps.Noticias:add_blogs' %}">Add Blogs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Hello {{request.user}}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% block profileactive %} {% endblock profileactive %}"
-                                href="{% url 'apps.usuarios:profile' %}">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'apps.usuarios:logout' %}">Logout</a>
+                                href="{% url 'apps.Noticias:add_blogs' %}">Crear Blog</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
                             <a class="nav-link {% block registeractive %} {% endblock registeractive %}"
-                                href="{% url 'apps.usuarios:register' %}">Register</a>
+                                href="{% url 'apps.usuarios:register' %}">Registrarse</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {% block loginactive %} {% endblock loginactive %}"
-                                href="{% url 'apps.usuarios:login' %}">Login</a>
+                                href="{% url 'apps.usuarios:login' %}">Ingresar</a>
                         </li>
                         {% endif %}
                     </ul>
                 </div>
-                <form class="d-flex" method="POST" action="/search/"> {% csrf_token %}
-                    <input class="form-control me-2" type="search" placeholder="Search" name="searched" id="searched"
-                        aria-label="Search">
-                    <button href="/search/" class="btn btn-outline-secondary" type="submit">Search</button>
+                <form class="d-flex align-items-center flex-wrap justify-content-between w-100" method="POST"
+                    action="/search/">
+                    {% csrf_token %}
+                    <div class="d-flex me-3 mb-2 mb-lg-0">
+                        <input class="form-control me-2" type="search" placeholder="Buscar en la Web" name="searched"
+                            id="searched" aria-label="Search" style="width: 300px;">
+                        <button
+                            class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2"
+                            type="submit" style="width: 100px;">Buscar</button>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                    <div class="d-flex align-items-center">
+                        <!-- Imagen de perfil -->
+                        <div class="me-2">
+                            <img src="{% if user.profile.image %}{{ user.profile.image.url }}{% else %}{% static 'img/Grupo7.png' %}{% endif %}"
+                                alt="Profile Image" class="rounded-circle" style="width: 40px; height: 40px;">
+                        </div>
+
+                        <!-- Botón desplegable para opciones -->
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ user.username }}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="{% url 'apps.usuarios:logout' %}">Salir</a></li>
+                                <li><a class="dropdown-item" href="{% url 'apps.usuarios:profile' %}">Perfil</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
                 </form>
             </div>
         </div>
     </nav>
     <div class="container-fluid bg-dark py-3 mb-3">
-        <div class="row align-items-center bg-dark w-80">
+        <div class="row align-items-center bg-dark">
             <div class="col-12">
-                <div class="d-flex justify-content-between">
-                    <div class="btn btn-outline-secondary, bg-primary text-dark text-center font-weight-medium py-2" style="width: 190px;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="nav-link btn btn-outline-secondary bg-primary text-dark text-center font-weight-medium py-2"
+                        style="width: 120px; flex-shrink: 0;">
                         Novedades
                     </div>
-                    <div class="owl-carousel tranding-carousel position-relative d-inline-flex align-items-center ml-3"
-                        style="flex-grow: 4; padding-right: 90px;">
+                    <div class="owl-carousel tranding-carousel d-inline-flex align-items-center ml-3"
+                        style="flex-grow: 1; overflow: hidden;">
                         <div class="text-truncate">
-                            <a class="text-white text-uppercase font-weight-semi-bold" href="">Siempre informado sobre
-                                las noticias que inspiran y generan cambio. ¡Juntos hacemos la diferencia!</a>
+                            <span class="text-white text-uppercase font-weight-semi-bold">Siempre informado sobre
+                                las noticias que inspiran y generan cambio. ¡Juntos hacemos la diferencia!</span>
                         </div>
                         <div class="text-truncate">
-                            <a class="text-white text-uppercase font-weight-semi-bold" href="">Siempre informado sobre
-                                las noticias que inspiran y generan cambio. ¡Juntos hacemos la diferencia!</a>
+                            <span class="text-white text-uppercase font-weight-semi-bold">Mantente al día con las
+                                últimas noticias y eventos en G7News.</span>
                         </div>
+                    </div>
+                    <div class="text-white ml-3" id="date-time"
+                        style="white-space: nowrap; width: 120px; flex-shrink: 0; text-align: right;">
+                        <!-- Aquí se insertará la hora mediante JavaScript -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <main>
- 
-        {% block content %}
-
-        {% endblock %}
-        <footer class="container-fluid bg-dark pt-5 px-sm-3 px-md-5 mt-5">
+        <div class="container-fluid">
             <div class="row">
-                <!-- Bloque de Contacto -->
-                <div class="col-lg-4 col-md-6 mb-5">
-                    <h5 class="mb-4 text-white text-uppercase font-weight-bold">Contacto</h5>
-                    <p class="font-weight-medium"><i class="fa fa-map-marker-alt mr-2"></i>Resistencia, Chaco, Argentina</p>
-                    <p class="font-weight-medium"><i class="fa fa-phone-alt mr-2"></i>+54 362 4123456</p>
-                    <p class="font-weight-medium"><i class="fa fa-envelope mr-2"></i>info@g7news.com</p>
-                    <h6 class="mt-4 mb-3 text-white text-uppercase font-weight-bold">Síguenos</h6>
-                    <div class="d-flex justify-content-start">
-                        <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-instagram"></i></a>
-                        <a class="btn btn-sm btn-secondary btn-lg-square" href="#"><i class="fab fa-youtube"></i></a>
+                <!-- Columna principal de contenido -->
+                <div class="col-lg-9">
+                    <div class="watermark-container">
+                        <div class="watermark">
+                            {% for i in "123456789101112131415"|make_list %}
+                            <div class="watermark-item">
+                                <div class="watermark-text">
+                                    <span class="text-primary">G7</span>
+                                    <span class="text-secondary">News</span>
+                                    <img src="{% static 'img/Grupo7.png' %}" alt="Logo" class="watermark-logo">
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% block content %}
+                    {% endblock %}
+                </div>
+
+                <!-- Nueva columna de publicidad -->
+                <!-- Nueva columna de publicidad -->
+                <div class="col-lg-3">
+                    <div class="sticky-sidebar">
+                        <div class="post-container mb-4">
+                            <h4>Publicidad</h4>
+                            <!-- Aquí puedes agregar tus anuncios o imágenes publicitarias -->
+                            <img src="{% static 'img/news-800x500-2.jpg' %}" class="img-fluid mb-3" alt="Anuncio 1">
+                            <img src="{% static 'img/news-700x435-1.jpg' %}" class="img-fluid mb-3" alt="Anuncio 2">
+                            <img src="{% static 'img/news-700x435-4.jpg' %}" class="img-fluid mb-3" alt="Anuncio 3">
+                            <img src="{% static 'img/news-800x500-3.jpg' %}" class="img-fluid mb-3" alt="Anuncio 4">
+                        </div>
                     </div>
                 </div>
-                
-                <!-- Bloque de Desarrolladores -->
-                <div class="col-lg-4 col-md-6 mb-5">
-                    <h5 class="mb-4 text-white text-uppercase font-weight-bold">Desarrolladores</h5>
-                    <p class="mb-2">Emilio Rojas - Full Stack Developer</p>
-                    <p class="mb-2">Agustín Roman - BackEnd</p>
-                    <p class="mb-2">Luis Zampaino - BackEnd</p>
-                    <p class="mb-2">Alejandro Suarez - FrontEnd</p>
-                    <p class="mb-2">Pablo Aguirre - Full Stack Developer</p>
-                    <p class="mb-2">Martín Sena - FrontEnd</p>
-                </div>
-                
-                <!-- Bloque Sobre Nosotros -->
-                <div class="col-lg-4 col-md-6 mb-5">
-                    <h5 class="mb-4 text-white text-uppercase font-weight-bold">Sobre Nosotros</h5>
-                    <p class="text-white">G7News es un proyecto dedicado a brindar noticias actualizadas y relevantes a nuestra comunidad. Nuestro equipo de desarrolladores trabaja incansablemente para ofrecer una experiencia de usuario excepcional y contenido de calidad.</p>
-                    <p class="text-white">Nos esforzamos por ser una fuente confiable de información, cubriendo una amplia gama de temas desde política hasta tecnología, siempre con un enfoque en la precisión y la objetividad.</p>
+            </div>
+        </div>
+    </main>
+    <footer class="container-fluid bg-dark pt-5 px-sm-3 px-md-5 mt-5">
+        <div class="row">
+            <!-- Bloque de Contacto -->
+            <div class="col-lg-4 col-md-6 mb-5">
+                <h5 class="mb-4 text-white text-uppercase font-weight-bold">Contacto</h5>
+                <p class="font-weight-medium"><i class="fa fa-map-marker-alt mr-2"></i>Resistencia, Chaco, Argentina
+                </p>
+                <p class="font-weight-medium"><i class="fa fa-phone-alt mr-2"></i>+54 362 4123456</p>
+                <p class="font-weight-medium"><i class="fa fa-envelope mr-2"></i>info@g7news.com</p>
+                <h6 class="mt-4 mb-3 text-white text-uppercase font-weight-bold">Síguenos</h6>
+                <div class="d-flex justify-content-start">
+                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="#"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="#"><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-sm btn-secondary btn-lg-square" href="#"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-        </footer>
-        <div class="container-fluid py-4 px-sm-3 px-md-5" style="background: #111111;">
-            <p class="m-0 text-center">&copy; <a href="#">G7News</a>. © Copyright 2024 G7News | Todos los derechos
-                reservados.
 
-                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                Dirección Nacional del Derecho de Autor DNDA <a href="#">Queda prohibida la reproducción total o parcial
-                    del presente diario.</a>
-            </p>
+            <!-- Bloque de Desarrolladores -->
+            <div class="col-lg-4 col-md-6 mb-5">
+                <h5 class="mb-4 text-white text-uppercase font-weight-bold">Desarrolladores</h5>
+                <p class="mb-2">Emilio Rojas - Full Stack Developer</p>
+                <p class="mb-2">Agustín Roman - BackEnd</p>
+                <p class="mb-2">Luis Zampaino - BackEnd</p>
+                <p class="mb-2">Alejandro Suarez - FrontEnd</p>
+                <p class="mb-2">Pablo Aguirre - Full Stack Developer</p>
+                <p class="mb-2">Martín Sena - FrontEnd</p>
+            </div>
+
+            <!-- Bloque Sobre Nosotros -->
+            <div class="col-lg-4 col-md-6 mb-5">
+                <h5 class="mb-4 text-white text-uppercase font-weight-bold">Sobre Nosotros</h5>
+                <p class="text-white">G7News es un proyecto dedicado a brindar noticias actualizadas y relevantes a
+                    nuestra comunidad. Nuestro equipo de desarrolladores trabaja incansablemente para ofrecer una
+                    experiencia de usuario excepcional y contenido de calidad.</p>
+                <p class="text-white">Nos esforzamos por ser una fuente confiable de información, cubriendo una
+                    amplia gama de temas desde política hasta tecnología, siempre con un enfoque en la precisión y
+                    la objetividad.</p>
+            </div>
         </div>
-        
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
+    </footer>
+    <div class="container-fluid py-4 px-sm-3 px-md-5" style="background: #111111;">
+        <p class="m-0 text-center">&copy; <a href="#">G7News</a>. © Copyright 2024 G7News | Todos los derechos
+            reservados.
 
-        <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+            Dirección Nacional del Derecho de Autor DNDA <a href="#">Queda prohibida la reproducción total o parcial
+                del presente diario.</a>
+        </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 
 
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <script src="{% static 'lib/easing/easing.min.js' %}"></script>
-        <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
 
 
-        <!-- Template Javascript -->
-        <script src="{% static 'js/main.js' %}"></script>
 
-        <script>
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!--<script>
             $(document).ready(function () {
                 $(".owl-carousel").owlCarousel();
 
@@ -256,10 +455,42 @@
 
             })
 
-        </script>
+        </script> carrusel anterior -->
 
-        {% block js %}
-        {% endblock %}
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const formattedDate = now.toLocaleDateString('es-AR', {
+                day: '2-digit', month: '2-digit', year: 'numeric'
+            });
+            const formattedTime = now.toLocaleTimeString('es-AR', {
+                hour: '2-digit', minute: '2-digit'
+            });
+            document.getElementById('date-time').textContent = formattedDate + ' ' + formattedTime;
+        }
+
+        // Actualizar la hora cada segundo
+        setInterval(updateDateTime, 1000);
+
+        // Llamar a la función inmediatamente para mostrar la hora actual
+        updateDateTime();
+
+        // Configuración del carrusel
+        $(document).ready(function () {
+            $(".owl-carousel").owlCarousel({
+                loop: true,
+                margin: 10,
+                items: 1,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplayHoverPause: true,
+                nav: false,
+                dots: false
+            });
+        });
+    </script>
+    {% block js %}
+    {% endblock %}
 </body>
 
 </html>
