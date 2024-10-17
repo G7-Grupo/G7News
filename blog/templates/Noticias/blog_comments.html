@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %} Blogs {% endblock %}
 
 {% block css %}
@@ -29,7 +29,7 @@ float: right;
             </div>
       </div>
       <br>
-      <img src="/media/{{post.image}}" alt="" height="250px" width="500px">
+      <img src="/media/{{post.image}}" alt="" height=700px width=700px>
       <br>
       <p>{{post.content}}.</p>
       <hr>
@@ -72,5 +72,4 @@ float: right;
                   {% endfor %}
             </div>
       </div>
-
       {% endblock %}
