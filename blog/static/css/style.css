@@ -9549,50 +9549,7 @@ h6,
   background: #FFCC00;
 }
 
-.tranding-carousel .owl-nav {
-  position: absolute;
-  width: auto;
-  height: 30px;
-  top: calc(50% - 15px);
-  right: -7px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  z-index: 1;
-}
 
-.tranding-carousel .owl-nav .owl-prev,
-.tranding-carousel .owl-nav .owl-next {
-  position: relative;
-  width: 30px;
-  height: 30px;
-  margin: 0 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #FFFFFF;
-  background: transparent;
-  border: 1px solid #FFFFFF;
-  font-size: 16px;
-  transition: .3s;
-}
-
-.tranding-carousel .owl-nav .owl-prev:hover,
-.tranding-carousel .owl-nav .owl-next:hover {
-  color: #FFFFFF;
-  background: #FFCC00;
-  border-color: #FFCC00;
-}
-
-.tranding-carousel.bg-white .owl-nav .owl-next {
-  margin-right: 22px;
-}
-
-.tranding-carousel.bg-white .owl-nav .owl-prev,
-.tranding-carousel.bg-white .owl-nav .owl-next {
-  color: #31404B;
-  border-color: #31404B;
-}
 
 .section-title {
   margin-bottom: 15px;

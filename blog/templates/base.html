@@ -282,17 +282,14 @@
                                 alt="Profile Image" class="rounded-circle" style="width: 40px; height: 40px;">
                         </div>
 
-                        <!-- Botón desplegable para opciones -->
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ user.username }}
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="{% url 'apps.usuarios:logout' %}">Salir</a></li>
-                                <li><a class="dropdown-item" href="{% url 'apps.usuarios:profile' %}">Perfil</a></li>
-                            </ul>
-                        </div>
+                        <!-- Botón con el nombre del usuario (link a su perfil) -->
+                        <a href="{% url 'apps.usuarios:profile' %}"
+                            class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2">
+                            {{user.username }}</a>
+
+                        <!-- Botón para salir -->
+                        <a href="{% url 'apps.usuarios:logout' %}"
+                            class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2">Salir</a>
                     </div>
                     {% endif %}
                 </form>
@@ -326,6 +323,7 @@
             </div>
         </div>
     </div>
+
     <main>
         <div class="container-fluid">
             <div class="row">
@@ -366,28 +364,51 @@
         </div>
     </main>
     <footer class="container-fluid bg-dark pt-5 px-sm-3 px-md-5 mt-5">
-        <div class="row">
+        <div class="row justify-content-center">
             <!-- Bloque de Contacto -->
-            <div class="col-lg-4 col-md-6 mb-5">
+            <div class="col-lg-4 col-md-6 mb-5 text-center">
                 <h5 class="mb-4 text-white text-uppercase font-weight-bold">Contacto</h5>
-                <p class="font-weight-medium"><i class="fa fa-map-marker-alt mr-2"></i>Resistencia, Chaco, Argentina
-                </p>
+
+                <!-- Mapa interactivo -->
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3520.3196244347995!2d-58.98546042422256!3d-27.451677582882117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94450c42ab2f0739%3A0xa918b2d2b5b6eec!2sPlaza%2025%20de%20Mayo!5e0!3m2!1ses!2sar!4v1697621345880!5m2!1ses!2sar"
+                    width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                <p class="font-weight-medium"><i class="fa fa-map-marker-alt mr-2"></i>Resistencia, Chaco, Argentina</p>
                 <p class="font-weight-medium"><i class="fa fa-phone-alt mr-2"></i>+54 362 4123456</p>
-                <p class="font-weight-medium"><i class="fa fa-envelope mr-2"></i>info@g7news.com</p>
-                <h6 class="mt-4 mb-3 text-white text-uppercase font-weight-bold">Síguenos</h6>
-                <div class="d-flex justify-content-start">
-                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="#"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="#"><i
-                            class="fab fa-linkedin-in"></i></a>
-                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="#"><i class="fab fa-instagram"></i></a>
-                    <a class="btn btn-sm btn-secondary btn-lg-square" href="#"><i class="fab fa-youtube"></i></a>
+                <!-- Correo electrónico interactivo -->
+                <p class="font-weight-medium">
+                    <i class="fa fa-envelope mr-2"></i>
+                    <a href="mailto:g7.informatorio@gmail.com?subject=Consulta"
+                        class="text-white">g7.informatorio@gmail.com</a>
+                </p>
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="https://twitter.com/informatorioch"
+                        target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2"
+                        href="https://www.facebook.com/informatorio.chaco/" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2"
+                        href="https://ar.linkedin.com/company/informatoriochaco" target="_blank">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2"
+                        href="https://www.instagram.com/g7news.info/" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="btn btn-sm btn-secondary btn-lg-square" href="http://www.youtube.com/@informatorio-"
+                        target="_blank">
+                        <i class="fab fa-youtube"></i>
+                    </a>
                 </div>
             </div>
 
             <!-- Bloque de Desarrolladores -->
-            <div class="col-lg-4 col-md-6 mb-5">
+            <div class="col-lg-4 col-md-6 mb-5 text-center">
                 <h5 class="mb-4 text-white text-uppercase font-weight-bold">Desarrolladores</h5>
                 <p class="mb-2">Emilio Rojas - Full Stack Developer</p>
                 <p class="mb-2">Agustín Roman - BackEnd</p>
@@ -398,14 +419,14 @@
             </div>
 
             <!-- Bloque Sobre Nosotros -->
-            <div class="col-lg-4 col-md-6 mb-5">
+            <div class="col-lg-4 col-md-6 mb-5 text-center">
                 <h5 class="mb-4 text-white text-uppercase font-weight-bold">Sobre Nosotros</h5>
                 <p class="text-white">G7News es un proyecto dedicado a brindar noticias actualizadas y relevantes a
                     nuestra comunidad. Nuestro equipo de desarrolladores trabaja incansablemente para ofrecer una
                     experiencia de usuario excepcional y contenido de calidad.</p>
-                <p class="text-white">Nos esforzamos por ser una fuente confiable de información, cubriendo una
-                    amplia gama de temas desde política hasta tecnología, siempre con un enfoque en la precisión y
-                    la objetividad.</p>
+                <p class="text-white">Nos esforzamos por ser una fuente confiable de información, cubriendo una amplia
+                    gama de temas desde política hasta tecnología, siempre con un enfoque en la precisión y la
+                    objetividad.</p>
             </div>
         </div>
     </footer>
@@ -440,22 +461,6 @@
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
 
-    <!--<script>
-            $(document).ready(function () {
-                $(".owl-carousel").owlCarousel();
-
-            })
-        </script>
-
-        <script>
-            $('.owl-carousel').owlCarousel({
-                loop: true,
-                margin: 10,
-                nav: true,
-
-            })
-
-        </script> carrusel anterior -->
 
     <script>
         function updateDateTime() {
@@ -477,15 +482,14 @@
 
         // Configuración del carrusel
         $(document).ready(function () {
-            $(".owl-carousel").owlCarousel({
-                loop: true,
-                margin: 10,
-                items: 1,
-                autoplay: true,
-                autoplayTimeout: 5000,
-                autoplayHoverPause: true,
-                nav: false,
-                dots: false
+            $('.owl-carousel').owlCarousel({
+                items: 1, // número de elementos a mostrar
+                loop: true, // hacer que el carrusel se repita indefinidamente
+                autoplay: true, // activa el desplazamiento automático
+                autoplayTimeout: 3000, // tiempo entre cada desplazamiento (milisegundos)
+                autoplayHoverPause: false, // no detener al pasar el cursor
+                nav: false, // desactivar los botones de navegación
+                dots: false // desactivar los puntos de paginación
             });
         });
     </script>
