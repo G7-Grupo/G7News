@@ -18,7 +18,9 @@
                     <h5 class="card-title">{{post.title}} <br><small>by {{post.author}}</small></h5>
                     <p class="card-text">{{post.content|truncatechars:210}}</p>
                     <a href="{% url 'apps.Noticias:blogs_comments' post.slug %}" class="btn btn-primary">Read More</a>
-                    <a href="{% url 'apps.Noticias:delete_blog_post' post.id %}" class="btn btn-primary">Delete</a>
+                    {% if user.is_authenticated and user == post.author  %}
+                      <a href="{% url 'apps.Noticias:delete_blog_post' post.id %}" class="btn btn-danger">Delete</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
