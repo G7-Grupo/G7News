@@ -27,13 +27,13 @@ def blogs_comments(request, slug):
     return render(request, "Noticias/blog_comments.html", {'post':post, 'comments':comments})
 
 @login_required(login_url='/login')
-def Delete_comment(request, comment_id,self):
+def Delete_comment(request, comment_id):
     
     comment = get_object_or_404(Comment, id=comment_id, user=request.user)
         
     if request.method == "POST":
         comment.delete()  
-        return redirect(reverse('Noticias:blogs_comments', kwargs={'slug': self.object.blog.slug}))
+        return redirect(reverse('Noticias:blogs_comments', kwargs={'slug': comment.blog.slug}))
          
 
     return render(request, 'Noticias/delete_comment.html', {'comment': comment})
