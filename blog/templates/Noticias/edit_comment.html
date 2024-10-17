@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit Blog Post {% endblock %}
+
+{% block css %}
+{% endblock %}
+{% block content %}
+<form enctype="multipart/form-data" method="POST"> {% csrf_token %}
+<div class="container mt-4">
+{{ form.as_p }}
+<button act class="btn btn-primary">Update Comment</button>
+<a href="{% url 'Noticias:blogs_comments' slug=comment.blog.slug %}" class="btn btn-danger">Cancel</a>
+</div>
+
+</form>
+{% endblock %}
+
+
+

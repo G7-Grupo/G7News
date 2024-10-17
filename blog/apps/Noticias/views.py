@@ -27,14 +27,14 @@ def blogs_comments(request, slug):
     return render(request, "Noticias/blog_comments.html", {'post':post, 'comments':comments})
 
 @login_required(login_url='/login')
-def Delete_comment(request, comment_id):
+def Delete_comment(request, comment_id,self):
     
     comment = get_object_or_404(Comment, id=comment_id, user=request.user)
         
     if request.method == "POST":
         comment.delete()  
-        return redirect('/')
-        #return redirect('blog_comments', slug = ?) 
+        return redirect(reverse('Noticias:blogs_comments', kwargs={'slug': self.object.blog.slug}))
+         
 
     return render(request, 'Noticias/delete_comment.html', {'comment': comment})
 
@@ -45,6 +45,20 @@ def Delete_Blog_Post(request, pk):
         posts.delete()
         return redirect('/')
     return render(request, 'Noticias/delete_blog_post.html', {'posts':posts})
+
+#@login_required(login_url='/login')
+class UpdateCommentView(UpdateView):
+    model = Comment
+    template_name = 'Noticias/edit_comment.html'
+    fields = ['content']
+
+    def get_object(self, queryset=None):
+        comment_id = self.kwargs.get('comment_id')
+        return get_object_or_404(Comment, id=comment_id)
+
+    def form_valid(self, form):
+        form.save()
+        return redirect(reverse('Noticias:blogs_comments', kwargs={'slug': self.object.blog.slug}))
 
 def search(request):
     if request.method == "POST":
