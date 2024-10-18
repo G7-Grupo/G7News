@@ -1,32 +1,50 @@
-{% extends 'base.html' %}
 
+{% extends 'base.html' %}
+{% load static %}
 {% block title %} Blogs {% endblock %}
 {% block homeactive %} active {% endblock homeactive %}
 
 {% block css %}
-
+.card-img-top {
+  object-fit: cover;
+  height: 250px; /* Altura deseada */
+  width: 100%;   /* Ajuste al ancho del contenedor */
+}<!-- Aquí puedes agregar estilos CSS adicionales si es necesario -->
 {% endblock %}
-{% block content %}
 
-  {% if posts %}
-    <p>Number of posts: {{ posts.count }}</p>
-    {% for post in posts %}
-        <div class="col-lg-4 my-4">
-            <div class="card shadow" style="width: 20rem; height: 33rem;">
-                <img src="/media/{{post.image}}" class="card-img-top" alt="..." height="250px">
-                <div class="card-body">
-                    <h5 class="card-title">{{post.title}} <br><small>by {{post.author}}</small></h5>
-                    <p class="card-text">{{post.content|truncatechars:210}}</p>
-                    <a href="{% url 'apps.Noticias:blogs_comments' post.slug %}" class="btn btn-primary">Read More</a>
-                    {% if user.is_authenticated and user == post.author  %}
-                      <a href="{% url 'apps.Noticias:delete_blog_post' post.id %}" class="btn btn-danger">Delete</a>
-                    {% endif %}
+{% block content %}
+<p class="text-center">Número de publicaciones: {{ posts.count }}</p>
+    <div class="row">
+        {% if posts %}
+            {% for post in posts %}
+            <div class="col-lg-3 col-md-4 my-2"> <!-- 3 columnas por fila en pantallas grandes -->
+                <div class="card shadow h-100">
+                    <img src="{% if post.image %}/media/{{ post.image }}{% else %}{% static 'img/default-image.jpg' %}{% endif %}" class="card-img-top" alt="{{ post.title }}" style="object-fit: center; height: 335px; width: 335px;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }} <br><small>por {{ post.author }}</small></h5>
+                        <p class="card-text">{{ post.content|truncatechars:210 }}</p>
+                        <a href="{% url 'apps.Noticias:blogs_comments' post.slug %}" class="btn btn-primary">Leer más</a>
+                        {% if user.is_authenticated and user == post.author %}
+                            <a href="{% url 'apps.Noticias:delete_blog_post' post.id %}" class="btn btn-danger">Eliminar</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
-  {% else %}
-    <p>No posts available</p>
-  {% endif %}
-
+            {% endfor %}
+        {% else %}
+            <p class="text-center">No hay publicaciones disponibles</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-lg-2">
+      <div class="sticky-sidebar">
+          <div class="post-container mb-1">
+              <h4>Publicidad</h4>
+              <img src="{% static 'img/news-800x500-2.jpg' %}" class="img-fluid mb-2" alt="Anuncio 1">
+              <img src="{% static 'img/news-700x435-1.jpg' %}" class="img-fluid mb-2" alt="Anuncio 2">
+              <img src="{% static 'img/news-700x435-4.jpg' %}" class="img-fluid mb-2" alt="Anuncio 3">
+              <img src="{% static 'img/news-800x500-3.jpg' %}" class="img-fluid mb-2" alt="Anuncio 4">
+          </div>
+      </div>
+    </div>
 {% endblock %}
