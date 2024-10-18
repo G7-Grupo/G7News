@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView, CreateView
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from .models import *
 from django.contrib.auth.decorators import login_required
@@ -26,12 +26,35 @@ def blogs_comments(request, slug):
     return render(request, "Noticias/blog_comments.html", {'post':post, 'comments':comments})
 
 @login_required(login_url='/login')
+def Delete_comment(request, comment_id):
+    
+    comment = get_object_or_404(Comment, id=comment_id, user=request.user)
+        
+    if request.method == "POST":
+        comment.delete()  
+        return redirect(reverse('Noticias:blogs_comments', kwargs={'slug': comment.blog.slug}))
+
+@login_required(login_url='/login')
 def Delete_Blog_Post(request, pk):
     posts = BlogPost.objects.get(id=pk)
     if request.method == "POST":
         posts.delete()
         return redirect('/')
     return render(request, 'Noticias/delete_blog_post.html', {'posts':posts})
+
+
+class UpdateCommentView(UpdateView):
+    model = Comment
+    template_name = 'Noticias/edit_comment.html'
+    fields = ['content']
+
+    def get_object(self, queryset=None):
+        comment_id = self.kwargs.get('comment_id')
+        return get_object_or_404(Comment, id=comment_id)
+
+    def form_valid(self, form):
+        form.save()
+        return redirect(reverse('Noticias:blogs_comments', kwargs={'slug': self.object.blog.slug}))
 
 def search(request):
     if request.method == "POST":

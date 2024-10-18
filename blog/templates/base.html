@@ -84,6 +84,10 @@
                         </li>
                         {% else %}
                         <li class="nav-item">
+                            <a class="nav-link active" href="#">Hello {{request.user}}</a>
+                        </li>
+                        
+                        <li class="nav-item">
                             <a class="nav-link {% block registeractive %} {% endblock registeractive %}"
                                 href="{% url 'apps.usuarios:register' %}">Register</a>
                         </li>
