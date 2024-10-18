@@ -19,7 +19,7 @@
             <div class="col-lg-3 col-md-4 my-2"> <!-- 3 columnas por fila en pantallas grandes -->
                 <div class="card shadow h-100">
                     <img src="{% if post.image %}/media/{{ post.image }}{% else %}{% static 'img/default-image.jpg' %}{% endif %}" class="card-img-top" alt="{{ post.title }}" style="object-fit: center; height: 335px; width: 335px;">
-                    <p class="btn btn-primary">{{ post.Categoria }} </p>
+                    <p class="btn btn-primary">{{ post.categoria }} </p>
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}  <br><small>por {{ post.author }}</small></h5>
                         <p class="card-text">{{ post.content|truncatechars:210 }}</p>

@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User
 from .models import *
 from django.contrib.auth.decorators import login_required
-from apps.usuarios.forms import ProfileForm, BlogPostForm
+from .forms import BlogPostForm
 from django.views.generic import UpdateView
 from django.contrib import messages
 
@@ -63,7 +63,6 @@ def add_blogs(request):
         form = BlogPostForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             blogpost = form.save(commit=False)
-            blogpost.Categoria = Categoria.objects.get(id=request.POST.get('categoria_id'))
             blogpost.author = request.user
             blogpost.save()
             return redirect('apps.Noticias:blogs')  
@@ -74,7 +73,7 @@ def add_blogs(request):
 class UpdatePostView(UpdateView):
     model = BlogPost
     template_name = 'Noticias/edit_blog_post.html'
-    fields = ['title', 'slug', 'content', 'Categoria', 'image']
+    fields = ['title', 'slug', 'content', 'categoria', 'image']
     def form_valid(self, form):
         form.save()
         return redirect(reverse('apps.Noticias:blogs'))

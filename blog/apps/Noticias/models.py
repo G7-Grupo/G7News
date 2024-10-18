@@ -21,7 +21,7 @@ class BlogPost(models.Model):
     content=models.TextField()
     image = models.ImageField(upload_to="profile_pics", blank=True, null=True)
     dateTime=models.DateTimeField(auto_now_add=True)
-    Categoria= models.ForeignKey(Categoria, on_delete=models.CASCADE, default='uncategorized')
+    categoria= models.ForeignKey(Categoria, on_delete=models.CASCADE, default='uncategorized')
     
     def __str__(self):
         return str(self.author) +  " Blog Title: " + self.title
