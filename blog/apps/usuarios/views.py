@@ -11,9 +11,6 @@ from django.contrib import messages
 
 
 # Create your views here.
-
-
-
 def user_profile(request, myid):
     post = BlogPost.objects.filter(id=myid)
     return render(request, "usuarios/user_profile.html", {'post':post})

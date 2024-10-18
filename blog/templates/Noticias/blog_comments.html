@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %} Blogs {% endblock %}
 
 {% block css %}
@@ -29,7 +29,7 @@ float: right;
             </div>
       </div>
       <br>
-      <img src="/media/{{post.image}}" alt="" height="250px" width="500px">
+      <img src="/media/{{post.image}}" alt="" height=700px width=700px>
       <br>
       <p>{{post.content}}.</p>
       <hr>
@@ -55,8 +55,14 @@ float: right;
                   {% for comment in comments %}
                   <div class="card">
                         <div class="card-header">
-                              <span style="font-size: 22px;">{{comment.user}} </span> <span
-                                    style="font-size: 12px;">{{comment.dateTime | naturaltime}}</span>
+                              <span style="font-size: 22px;">{{comment.user}} </span> 
+                              <span style="font-size: 12px;">{{comment.dateTime | naturaltime}}</span>
+                              {% if user.is_authenticated and user == comment.user %}
+                                    <form method="get" action="{% url 'Noticias:delete_comment' comment.id %}" style="display:inline;">
+                                          {% csrf_token %}
+                                          <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                              {% endif %}
                         </div>
                         <div class="card-body">
                               <h6 class="card-text">{{comment.content}}</h6>
@@ -66,5 +72,4 @@ float: right;
                   {% endfor %}
             </div>
       </div>
-
       {% endblock %}

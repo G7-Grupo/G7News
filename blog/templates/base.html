@@ -35,55 +35,7 @@
 </head>
 
 <body>
-    <style>
-        /* Estilo para el nav con un fondo de gradiente y sombra */
-        .navbar {
-            background: linear-gradient(180deg, #333, #111);
-            box-shadow:
-                5px 5px 15px rgba(26, 26, 26, 0.6),
-                -5px -5px 15px rgba(68, 68, 68, 0.6);
-        }
-
-        /* Estilo para los botones */
-        .nav-link {
-            border-radius: 25px;
-            /* Aumenta el radio para bordes más redondeados */
-            padding: 1px 3px;
-            /* Margen más ajustado con respecto a las letras */
-            transition: background 0.3s;
-            /* Efecto de transición suave */
-        }
-
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.1);
-            /* Efecto hover con fondo claro */
-        }
-
-        /* Estilo para el botón de búsqueda */
-        .btn-outline-secondary {
-            border-radius: 10px;
-            color: white;
-            /* Color de texto blanco */
-            border-color: white;
-            /* Color del borde blanco */
-        }
-
-        .btn-outline-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            /* Efecto hover */
-        }
-
-        /* Cambio del color de las letras "News" */
-        .text-primary {
-            color: yellow !important;
-            /* Cambia "G7" a color blanco */
-        }
-
-        .text-secondary {
-            color: white !important;
-            /* Cambia "News" a color blanco */
-        }
-    </style>
+    
     <!-- Breaking News End -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container-fluid">
@@ -101,7 +53,7 @@
                             <a class="nav-link {% block homeactive %} {% endblock homeactive %}" aria-current="page"
                                 href="/">Home</a>
                         </li>
-                        {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categorías</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -115,7 +67,10 @@
                         </div>
                         <li class="nav-item">
                             <a class="nav-link {% block add_blogs_active %} {% endblock add_blogs_active %}"
-                                href="{% url 'apps.Noticias:add_blogs' %}">Add Blogs</a>
+                                href="{% url 'apps.Noticias:add_blogs'  %}">Add Blogs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"  href="{% url 'apps.Noticias:add_Categoria'  %}">Add Category</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Hello {{request.user}}</a>
@@ -139,14 +94,16 @@
                         {% endif %}
                     </ul>
                 </div>
-                <form class="d-flex" method="POST" action="/search/"> {% csrf_token %}
+                <form class="d-flex" method="POST" action="{% url 'apps.Noticias:search'  %}"> {% csrf_token %}
                     <input class="form-control me-2" type="search" placeholder="Search" name="searched" id="searched"
                         aria-label="Search">
-                    <button href="/search/" class="btn btn-outline-secondary" type="submit">Search</button>
+                    <button href="{% url 'apps.Noticias:search'  %}" class="btn btn-outline-secondary" type="submit">Search</button>   
                 </form>
+                
             </div>
         </div>
     </nav>
+    
     <div class="container-fluid bg-dark py-3 mb-3">
         <div class="row align-items-center bg-dark w-80">
             <div class="col-12">
@@ -169,11 +126,12 @@
             </div>
         </div>
     </div>
+    {% block body %}
+    {% endblock %}
     {% block content %}
     {% endblock %}
     <main>
  
-        
         <footer class="container-fluid bg-dark pt-5 px-sm-3 px-md-5 mt-5">
             <div class="row">
                 <!-- Bloque de Contacto -->

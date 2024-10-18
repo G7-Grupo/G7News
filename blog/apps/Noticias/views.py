@@ -1,7 +1,6 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth  import authenticate,  login, logout
 from .models import *
 from django.contrib.auth.decorators import login_required
 from apps.usuarios.forms import ProfileForm, BlogPostForm
@@ -26,6 +25,7 @@ def blogs_comments(request, slug):
         comment.save()
     return render(request, "Noticias/blog_comments.html", {'post':post, 'comments':comments})
 
+@login_required(login_url='/login')
 def Delete_Blog_Post(request, pk):
     posts = BlogPost.objects.get(id=pk)
     if request.method == "POST":
@@ -35,11 +35,11 @@ def Delete_Blog_Post(request, pk):
 
 def search(request):
     if request.method == "POST":
-        searched = request.POST['searched']
-        blogs = BlogPost.objects.filter(title__contains=searched)
-        return render(request, "search.html", {'searched':searched, 'blogs':blogs})
+        searched = request.POST ['searched']
+        posts = BlogPost.objects.filter(title__contains=searched)
+        return render(request, "Noticias/search.html", {'searched':searched, 'posts':posts})
     else:
-        return render(request, "search.html", {})
+        return render(request, "Noticias/search.html", {})
 
 """    
 @login_required(login_url = '/login')
@@ -63,6 +63,7 @@ def add_blogs(request):
         form = BlogPostForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             blogpost = form.save(commit=False)
+            blogpost.Categoria = Categoria.objects.get(id=request.POST.get('categoria_id'))
             blogpost.author = request.user
             blogpost.save()
             return redirect('apps.Noticias:blogs')  
@@ -73,7 +74,15 @@ def add_blogs(request):
 class UpdatePostView(UpdateView):
     model = BlogPost
     template_name = 'Noticias/edit_blog_post.html'
-    fields = ['title', 'slug', 'content', 'image']
+    fields = ['title', 'slug', 'content', 'Categoria', 'image']
     def form_valid(self, form):
         form.save()
         return redirect(reverse('apps.Noticias:blogs'))
+
+class AddCategoriaView(CreateView):
+    model = Categoria
+    template_name = 'Noticias/add_Categoria.html'
+    fields = '__all__'
+  
+   
+
