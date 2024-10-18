@@ -9,7 +9,7 @@
 {% block content %}
 
   {% if posts %}
-    <p>Number of posts: {{ posts.count }}</p>
+    <p>Post: {{ posts.count }}</p>
     {% for post in posts %}
         <div class="col-lg-4 my-4">
             <div class="card shadow" style="width: 20rem; height: 33rem;">
@@ -17,14 +17,14 @@
                 <div class="card-body">
                     <h5 class="card-title">{{post.title}} <br><small>by {{post.author}}</small></h5>
                     <p class="card-text">{{post.content|truncatechars:210}}</p>
-                    <a href="{% url 'apps.Noticias:blogs_comments' post.slug %}" class="btn btn-primary">Read More</a>
-                    <a href="{% url 'apps.Noticias:delete_blog_post' post.id %}" class="btn btn-primary">Delete</a>
+                    <a href="{% url 'apps.Noticias:blogs_comments' post.slug %}" class="btn btn-primary">Leer más</a>
+                    <a href="{% url 'apps.Noticias:delete_blog_post' post.id %}" class="btn btn-primary">Borrar</a>
                 </div>
             </div>
         </div>
     {% endfor %}
   {% else %}
-    <p>No posts available</p>
+    <p>No hay publicaciones disponibles</p>
   {% endif %}
 
 {% endblock %}

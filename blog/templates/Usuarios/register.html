@@ -1,38 +1,84 @@
 {% extends 'base.html' %}
 
+{% load static %}
 {% block title %} Register Page {% endblock %}
 {% block registeractive %} active {% endblock registeractive %}
 
 {% block css %}
+<style>
+    .container {
+        display: flex;
+        justify-content: right;
+        /* Centrar horizontalmente */
+        align-items: center;
+        /* Centrar verticalmente */
+        height: 100%;
+        /* Usar el 100% del alto disponible */
+    }
+
+    .register-container {
+        padding: 1%;
+        margin-top: 1%;
+        margin-bottom: 1%;
+        border-radius: 0.5rem;
+        background: #f7f2ea;
+        box-shadow: 0px 0px 30px rgba(0, 0, 0, 3);
+        max-width: 620px;
+    }
+
+    .register-container label {
+        font-weight: bold;
+        font-size: 18px;
+        color: #333;
+    }
+
+    .register-container input {
+        font-size: 16px;
+        color: #555;
+    }
+
+    .register-container button {
+        background-color: #FFCC00;
+        border-color: #FFCC00;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .register-container button:hover {
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+</style>
 {% endblock %}
+
 {% block content %}
 <form action="{% url 'apps.usuarios:register' %}" method="POST"> {% csrf_token %}
-    <div class="container mt-5">
+    <div class="register-container mt-5">
         <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
+            <label for="username" class="form-label">Usuario</label>
             <input type="text" class="form-control" id="username" name="username">
         </div>
         <div class="mb-3">
-            <label for="first_nam" class="form-label">First Name</label>
+            <label for="first_name" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="first_name" name="first_name">
         </div>
         <div class="mb-3">
-            <label for="last_name" class="form-label">Last Name</label>
+            <label for="last_name" class="form-label">Apellido</label>
             <input type="text" class="form-control" id="last_name" name="last_name">
         </div>
         <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
+            <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" name="email">
         </div>
         <div class="mb-3">
-            <label for="password1" class="form-label">Password</label>
+            <label for="password1" class="form-label">Contraseña</label>
             <input type="password" class="form-control" id="password1" name="password1">
         </div>
         <div class="mb-3">
-            <label for="password2" class="form-label">Confirm Password</label>
+            <label for="password2" class="form-label">Confirmar Contraseña</label>
             <input type="password" class="form-control" id="password2" name="password2">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="nav-link btn btn-primary">Ingresar</button>
     </div>
 </form>
 {% endblock %}
