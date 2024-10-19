@@ -25,6 +25,8 @@ def blogs_comments(request, slug):
         comment.save()
     return render(request, "Noticias/blog_comments.html", {'post':post, 'comments':comments})
 
+
+
 @login_required(login_url='/login')
 def Delete_comment(request, comment_id):
     
@@ -33,6 +35,7 @@ def Delete_comment(request, comment_id):
     if request.method == "POST":
         comment.delete()  
         return redirect(reverse('Noticias:blogs_comments', kwargs={'slug': comment.blog.slug}))
+    return render(request, 'Noticias/delete_comment.html', {'comment': comment})
 
 @login_required(login_url='/login')
 def Delete_Blog_Post(request, pk):
@@ -54,7 +57,7 @@ class UpdateCommentView(UpdateView):
 
     def form_valid(self, form):
         form.save()
-        return redirect(reverse('Noticias:blogs_comments', kwargs={'slug': self.object.blog.slug}))
+        return redirect(reverse('apps.Noticias:blogs_comments', kwargs={'slug': self.object.blog.slug}))
 
 def search(request):
     if request.method == "POST":
@@ -106,5 +109,9 @@ class AddCategoriaView(CreateView):
     template_name = 'Noticias/add_Categoria.html'
     fields = '__all__'
   
+def CategoriasView(request, cats):
+    categoria_instance = get_object_or_404(Categoria, name=cats)
+    categoria_posts = BlogPost.objects.filter(categoria=categoria_instance)
+    return render(request, 'Noticias/categorias.html',{'cats':cats, 'categoria_posts':categoria_posts})
    
 

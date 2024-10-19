@@ -27,7 +27,7 @@ class BlogPost(models.Model):
         return str(self.author) +  " Blog Title: " + self.title
     
     def get_absolute_url(self):
-        return reverse('blogs')
+        return reverse('apps.Noticias:blogs')
 
 
     
