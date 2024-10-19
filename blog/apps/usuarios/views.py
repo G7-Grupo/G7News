@@ -11,7 +11,7 @@ from django.contrib import messages
 
 
 
-# Create your views here.
+
 def user_profile(request, myid):
     post = BlogPost.objects.filter(id=myid)
     return render(request, "usuarios/user_profile.html", {'post':post})
@@ -34,28 +34,32 @@ def edit_profile(request):
         form=ProfileForm(instance=profile)
     return render(request, "usuarios/edit_profile.html", {'form':form})
 
-
 def Register(request):
-    if request.method=="POST":   
+    if request.method == "POST":
         username = request.POST['username']
         email = request.POST['email']
-        first_name=request.POST['first_name']
-        last_name=request.POST['last_name']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-        
+
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
-            return redirect('register')
+            return redirect('/')
         
         user = User.objects.create_user(username, email, password1)
         user.first_name = first_name
         user.last_name = last_name
         user.save()
-        return render(request, 'usuarios/login.html')   
+
+        registrado_group = Group.objects.get(name='Registrado')
+        user.groups.add(registrado_group)
+
+        messages.success(request, "Registro exitoso. Por favor, inicia sesión.")
+
+        return redirect('/usuarios/login') 
+
     return render(request, "usuarios/register.html")
-
-
 
 def Login(request):
     if request.method=="POST":

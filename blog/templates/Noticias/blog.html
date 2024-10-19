@@ -21,7 +21,7 @@
                         <h5 class="card-title">{{ post.title }}  <br><small>por {{ post.author }}</small></h5>
                         <p class="card-text">{{ post.content|truncatechars:210 }}</p>
                         <a href="{% url 'apps.Noticias:blogs_comments' post.slug %}" class="btn btn-primary">Leer más</a>
-                        {% if user.is_authenticated %}
+                        {% if user.is_authenticated and user_is_colaborador %}
                             <a href="{% url 'apps.Noticias:delete_blog_post' post.id %}" class="btn btn-danger">Eliminar</a>
                         {% endif %}
                     </div>

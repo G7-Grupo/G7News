@@ -65,13 +65,16 @@
                                 <a href="#" class="dropdown-item">Rincón Gamer 🎮</a>
                             </div>
                         </div>
-                        <li class="nav-item">
-                            <a class="nav-link {% block add_blogs_active %} {% endblock add_blogs_active %}"
-                                href="{% url 'apps.Noticias:add_blogs'  %}">Add Blogs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link"  href="{% url 'apps.Noticias:add_Categoria'  %}">Add Category</a>
-                        </li>
+                            {% if user.is_authenticated and user_is_colaborador %}
+                            <li class="nav-item">
+                                <a class="nav-link {% block add_blogs_active %} {% endblock add_blogs_active %}"
+                                    href="{% url 'apps.Noticias:add_blogs'  %}">Add Blogs</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link"  href="{% url 'apps.Noticias:add_Categoria'  %}">Add Category</a>
+                            </li>
+                            {% endif %}
                         
                         {% else %}
                         
