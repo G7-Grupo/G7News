@@ -63,12 +63,12 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categorías</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="#" class="dropdown-item">Política 🏛️</a>
-                                <a href="#" class="dropdown-item">Deportes 🏆</a>
+                                <a href="#" class="dropdown-item">Política ️</a>
+                                <a href="#" class="dropdown-item">Deportes </a>
                                 <a href="#" class="dropdown-item">Salud ⚕️</a>
                                 <a href="#" class="dropdown-item">Ciencia ⚗️</a>
-                                <a href="#" class="dropdown-item">Tecnología 👨‍💻</a>
-                                <a href="#" class="dropdown-item">Rincón Gamer 🎮</a>
+                                <a href="#" class="dropdown-item">Tecnología </a>
+                                <a href="#" class="dropdown-item">Rincón Gamer </a>
                             </div>
                         </div>
                         <li class="nav-item">
@@ -87,61 +87,60 @@
                         {% endif %}
                     </ul>
                 </div>
-                <form class="d-flex align-items-center flex-wrap justify-content-between w-100" method="POST"
-                    action="/search/">
+                <form class="d-flex align-items-center flex-wrap justify-content-between w-100" method="POST" action="/search/">
                     {% csrf_token %}
                     <div class="d-flex me-3 mb-2 mb-lg-0">
-                        <input class="form-control me-2" type="search" placeholder="Buscar en la Web" name="searched"
-                            id="searched" aria-label="Search" style="width: 300px;">
-                        <button
-                            class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2"
-                            type="submit" style="width: 100px;">Buscar</button>
+                        <input class="form-control me-2" type="search" placeholder="Buscar en la Web" name="searched" id="searched" aria-label="Search" style="width: 250px;">
+                        <button class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2" type="submit" style="width: 80px;">Buscar</button>
                     </div>
-
                     {% if user.is_authenticated %}
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center" style="gap: 10px;">  <!-- Ajusta el 'gap' para el espaciado -->
                         <!-- Imagen de perfil -->
-                        <div class="me-2">
-                            <img src="{% if user.profile.image %}{{ user.profile.image.url }}{% else %}{% static 'img/Grupo7.png' %}{% endif %}"
-                                alt="Profile Image" class="rounded-circle" style="width: 40px; height: 40px;">
+                        <div class="me-2" style="margin-right: 5px;"> <!-- Ajusta el margen según necesites -->
+                            <img src="{% if user.profile.image %}{{ user.profile.image.url }}{% else %}{% static 'img/Grupo7.png' %}{% endif %}" alt="Profile Image" class="rounded-circle" style="width: 40px; height: 40px;">
                         </div>
-
                         <!-- Botón con el nombre del usuario (link a su perfil) -->
-                        <a href="{% url 'apps.usuarios:profile' %}"
-                            class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2">
-                            {{user.username }}</a>
-
+                        <a href="{% url 'apps.usuarios:profile' %}" class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2" style="margin-right: 5px;">{{user.username }}</a>
                         <!-- Botón para salir -->
-                        <a href="{% url 'apps.usuarios:logout' %}"
-                            class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2">Salir</a>
+                        <a href="{% url 'apps.usuarios:logout' %}" class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2">Salir</a>
                     </div>
                     {% endif %}
                 </form>
+                
             </div>
         </div>
     </nav>
+
+    <div class="container-fluid bg-dark py-1">
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="#footer"
+                class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2">Contacto</a>
+            <div class="text-white" id="date-time" style="text-align: right;">
+                <!-- Aquí se insertará la hora mediante JavaScript -->
+            </div>
+        </div>
+    </div>
+
     <div class="container-fluid bg-dark py-3 mb-3">
         <div class="row align-items-center bg-dark">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="nav-link btn btn-outline-secondary bg-primary text-dark text-center font-weight-medium py-2"
+                    <div class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2"
                         style="width: 120px; flex-shrink: 0;">
                         Novedades
                     </div>
-                    <div class="owl-carousel tranding-carousel d-inline-flex align-items-center ml-3"
-                        style="flex-grow: 1; overflow: hidden;">
-                        <div class="text-truncate">
-                            <span class="text-white text-uppercase font-weight-semi-bold">Siempre informado sobre
-                                las noticias que inspiran y generan cambio. ¡Juntos hacemos la diferencia!</span>
+                    <div class="flex-grow-1 mx-3">
+                        <div class="owl-carousel tranding-carousel d-inline-flex align-items-center"
+                            style="overflow: hidden;">
+                            <div class="text-truncate">
+                                <span class="text-white text-uppercase font-weight-semi-bold">Siempre informado sobre
+                                    las noticias que inspiran y generan cambio. ¡Juntos hacemos la diferencia!</span>
+                            </div>
+                            <div class="text-truncate">
+                                <span class="text-white text-uppercase font-weight-semi-bold">Mantente al día con las
+                                    últimas noticias y eventos en G7News.</span>
+                            </div>
                         </div>
-                        <div class="text-truncate">
-                            <span class="text-white text-uppercase font-weight-semi-bold">Mantente al día con las
-                                últimas noticias y eventos en G7News.</span>
-                        </div>
-                    </div>
-                    <div class="text-white ml-3" id="date-time"
-                        style="white-space: nowrap; width: 120px; flex-shrink: 0; text-align: right;">
-                        <!-- Aquí se insertará la hora mediante JavaScript -->
                     </div>
                 </div>
             </div>
@@ -187,47 +186,50 @@
             </div>
         </div>
     </main>
-    <footer class="container-fluid bg-dark pt-5 px-sm-3 px-md-5 mt-5">
+    <footer id="footer" class="container-fluid bg-dark pt-5 px-sm-3 px-md-5 mt-5">
         <div class="row justify-content-center">
             <!-- Bloque de Contacto -->
             <div class="col-lg-4 col-md-6 mb-5 text-center">
                 <h5 class="mb-4 text-white text-uppercase font-weight-bold">Contacto</h5>
+                <div class="social-media-links">
 
-                <!-- Mapa interactivo -->
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3520.3196244347995!2d-58.98546042422256!3d-27.451677582882117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94450c42ab2f0739%3A0xa918b2d2b5b6eec!2sPlaza%2025%20de%20Mayo!5e0!3m2!1ses!2sar!4v1697621345880!5m2!1ses!2sar"
-                    width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <!-- Mapa interactivo -->
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3520.3196244347995!2d-58.98546042422256!3d-27.451677582882117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94450c42ab2f0739%3A0xa918b2d2b5b6eec!2sPlaza%2025%20de%20Mayo!5e0!3m2!1ses!2sar!4v1697621345880!5m2!1ses!2sar"
+                        width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
 
-                <p class="font-weight-medium"><i class="fa fa-map-marker-alt mr-2"></i>Resistencia, Chaco, Argentina</p>
-                <p class="font-weight-medium"><i class="fa fa-phone-alt mr-2"></i>+54 362 4123456</p>
-                <!-- Correo electrónico interactivo -->
-                <p class="font-weight-medium">
-                    <i class="fa fa-envelope mr-2"></i>
-                    <a href="mailto:g7.informatorio@gmail.com?subject=Consulta"
-                        class="text-white">g7.informatorio@gmail.com</a>
-                </p>
-                <div class="d-flex justify-content-center">
-                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="https://twitter.com/informatorioch"
-                        target="_blank">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2"
-                        href="https://www.facebook.com/informatorio.chaco/" target="_blank">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2"
-                        href="https://ar.linkedin.com/company/informatoriochaco" target="_blank">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a class="btn btn-sm btn-secondary btn-lg-square mr-2"
-                        href="https://www.instagram.com/informatorio/" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a class="btn btn-sm btn-secondary btn-lg-square" href="http://www.youtube.com/@informatorio-"
-                        target="_blank">
-                        <i class="fab fa-youtube"></i>
-                    </a>
+                    <p class="font-weight-medium"><i class="fa fa-map-marker-alt mr-2"></i>Resistencia, Chaco, Argentina
+                    </p>
+                    <p class="font-weight-medium"><i class="fa fa-phone-alt mr-2"></i>+54 362 4123456</p>
+                    <!-- Correo electrónico interactivo -->
+                    <p class="font-weight-medium">
+                        <i class="fa fa-envelope mr-2"></i>
+                        <a href="mailto:g7.informatorio@gmail.com?subject=Consulta"
+                            class="text-white">g7.informatorio@gmail.com</a>
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="https://twitter.com/informatorioch"
+                            target="_blank">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a class="btn btn-sm btn-secondary btn-lg-square mr-2"
+                            href="https://www.facebook.com/informatorio.chaco/" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="btn btn-sm btn-secondary btn-lg-square mr-2"
+                            href="https://ar.linkedin.com/company/informatoriochaco" target="_blank">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a class="btn btn-sm btn-secondary btn-lg-square mr-2"
+                            href="https://www.instagram.com/informatorio/" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="btn btn-sm btn-secondary btn-lg-square" href="http://www.youtube.com/@informatorio-"
+                            target="_blank">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 
