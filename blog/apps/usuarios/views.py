@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect, HttpResponse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth  import authenticate,  login, logout
 from .models import *
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, BlogPostForm
 from django.views.generic import UpdateView
 from django.contrib import messages
+
 
 
 # Create your views here.
@@ -53,6 +54,8 @@ def Register(request):
         user.save()
         return render(request, 'usuarios/login.html')   
     return render(request, "usuarios/register.html")
+
+
 
 def Login(request):
     if request.method=="POST":
