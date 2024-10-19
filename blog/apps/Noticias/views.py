@@ -1,29 +1,47 @@
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import CreateView
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
 from .models import *
 from django.contrib.auth.decorators import login_required
 from .forms import BlogPostForm
 from django.views.generic import UpdateView
 from django.contrib import messages
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 
 def blogs(request):
     print("Entrando a la vista blogs") 
     posts = BlogPost.objects.all().order_by('-dateTime')
-    print(f"Posts: {posts}")  # Esto debería mostrar los posts en la consola
-    return render(request, "Noticias/blog.html", {'posts': posts})
+    print(f"Posts: {posts}")  
+    user_is_colaborador = False
+    if request.user.is_authenticated:
+        user_is_colaborador = request.user.is_superuser or request.user.groups.filter(name='Colaborador').exists()
+
+    context = {
+        'posts': posts,
+        'user_is_colaborador': user_is_colaborador,
+    }
+    return render(request, 'Noticias/blog.html', context)
+
 
 def blogs_comments(request, slug):
-    post = BlogPost.objects.filter(slug=slug).first()
+    post = get_object_or_404(BlogPost, slug=slug)
     comments = Comment.objects.filter(blog=post)
-    if request.method=="POST":
+    user_is_colaborador = request.user.is_superuser or request.user.groups.filter(name='Colaborador').exists()
+
+    if request.method == "POST":
         user = request.user
-        content = request.POST.get('content','')
-        blog_id =request.POST.get('blog_id','')
-        comment = Comment(user = user, content = content, blog=post)
+        content = request.POST.get('content', '')
+        blog_id = request.POST.get('blog_id', '')
+        comment = Comment(user=user, content=content, blog=post)
         comment.save()
-    return render(request, "Noticias/blog_comments.html", {'post':post, 'comments':comments})
+
+    context = {
+        'post': post,
+        'comments': comments,
+        'user_is_colaborador': user_is_colaborador
+    }
+
+    return render(request, 'Noticias/blog_comments.html', context)
 
 
 
@@ -67,22 +85,8 @@ def search(request):
     else:
         return render(request, "Noticias/search.html", {})
 
-"""    
-@login_required(login_url = '/login')
-def add_blogs(request):
-    if request.method=="POST":
-        form = BlogPostForm(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            blogpost = form.save(commit=False)
-            blogpost.author = request.user
-            blogpost.save()
-            obj = form.instance
-            alert = True
-            return render(request, "Noticias/blog.html",{'obj':obj, 'alert':alert})
-    else:
-        form=BlogPostForm()
-    return render(request, "Noticias/add_blogs.html", {'form':form})
-"""
+
+
 @login_required(login_url='/login')
 def add_blogs(request):
     if request.method == "POST":
@@ -96,13 +100,18 @@ def add_blogs(request):
         form = BlogPostForm()
     return render(request, "Noticias/add_blogs.html", {'form': form})
 
-class UpdatePostView(UpdateView):
+class UpdatePostView(UserPassesTestMixin, UpdateView):
     model = BlogPost
     template_name = 'Noticias/edit_blog_post.html'
     fields = ['title', 'slug', 'content', 'categoria', 'image']
+
     def form_valid(self, form):
         form.save()
         return redirect(reverse('apps.Noticias:blogs'))
+
+    def test_func(self):
+        return self.request.user.is_superuser or self.request.user.groups.filter(name='Colaborador').exists()
+    
 
 class AddCategoriaView(CreateView):
     model = Categoria
@@ -114,4 +123,27 @@ def CategoriasView(request, cats):
     categoria_posts = BlogPost.objects.filter(categoria=categoria_instance)
     return render(request, 'Noticias/categorias.html',{'cats':cats, 'categoria_posts':categoria_posts})
    
+def blogs(request):
+    sort_by = request.GET.get('sort', 'dateTime')  # Default to sorting by dateTime
+    order = request.GET.get('order', 'desc')  # Default to descending order
 
+    if sort_by == 'categoria':
+        if order == 'asc':
+            blog_posts = BlogPost.objects.select_related('categoria').order_by('categoria__name', '-dateTime')
+        else:
+            blog_posts = BlogPost.objects.select_related('categoria').order_by('-categoria__name', '-dateTime')
+    elif sort_by == 'title':
+        if order == 'asc':
+            blog_posts = BlogPost.objects.order_by('title', '-dateTime')
+        else:
+            blog_posts = BlogPost.objects.order_by('-title', '-dateTime')
+    elif sort_by == 'dateTime':
+        if order == 'asc':
+            blog_posts = BlogPost.objects.order_by('dateTime')
+        else:
+            blog_posts = BlogPost.objects.order_by('-dateTime')
+    else:
+        # Fallback, in case of unexpected input
+        blog_posts = BlogPost.objects.order_by('-dateTime')
+
+    return render(request, 'Noticias/blog.html', {'posts': blog_posts})

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect, HttpResponse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth  import authenticate,  login, logout
 from .models import *
 from django.contrib.auth.decorators import login_required
@@ -45,14 +45,24 @@ def Register(request):
         
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
-            return redirect('register')
+            return redirect('/')
         
         user = User.objects.create_user(username, email, password1)
         user.first_name = first_name
         user.last_name = last_name
         user.save()
-        return render(request, 'usuarios/login.html')   
+
+        registrado_group = Group.objects.get(name='Registrado')
+        user.groups.add(registrado_group)
+
+        messages.success(request, "Registro exitoso. Por favor, inicia sesión.")
+
+
+        
+        return redirect(request, 'usuarios/login.html')   
     return render(request, "usuarios/register.html")
+
+
 
 def Login(request):
     if request.method=="POST":

@@ -19,7 +19,6 @@ class BlogPostForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Title of the Blog'}),
             'Categoria': forms.Select(choices=choice_list, attrs={'class':'form-control'}),
-            'slug': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Copy the title with no space and a hyphen in between'}),
             'content': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Content of the Blog'}),
             
         }
