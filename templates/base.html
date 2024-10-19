@@ -1,0 +1,351 @@
+{% load static %}
+<script type="text/javascript" src="{{ STATIC_URL }} /static/jquery-1.8.0.js"></script>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title> {% block title %} G7News - Noticias y Actualidad {% endblock %} </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!--Enlace a los estilos de cada bloque de los blogs y posteos -->
+    <!-- Activar éste primero<link rel="stylesheet" href="{% static 'css/style.css' %}"> -->
+    <!-- Duplicado <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"> -->
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+    {% block css %}
+    {% endblock %}
+
+
+
+</head>
+
+<body>
+    <!-- Breaking News End -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top main-navbar">
+        <div class="container-fluid">
+            <h1 class="m-0 display-4 text-uppercase text-primary">G7<span
+                    class="text-secondary font-weight-normal">News</span></h1>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="container mx-3">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link {% block homeactive %} {% endblock homeactive %}" aria-current="page"
+                                href="/">Inicio</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categorías</a>
+                            <div class="dropdown-menu rounded-0">
+                                <a href="#" class="dropdown-item">Política ️</a>
+                                <a href="#" class="dropdown-item">Deportes </a>
+                                <a href="#" class="dropdown-item">Salud ⚕️</a>
+                                <a href="#" class="dropdown-item">Ciencia ⚗️</a>
+                                <a href="#" class="dropdown-item">Tecnología </a>
+                                <a href="#" class="dropdown-item">Rincón Gamer </a>
+                            </div>
+                        </div>
+                        <li class="nav-item">
+                            <a class="nav-link {% block add_blogs_active %} {% endblock add_blogs_active %}"
+                                href="{% url 'apps.Noticias:add_blogs' %}">Crear Blog</a>
+                        </li>
+                        
+                        {% else %}
+                        
+                        <li class="nav-item">
+                            <a class="nav-link {% block registeractive %} {% endblock registeractive %}"
+                                href="{% url 'apps.usuarios:register' %}">Registrarse</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% block loginactive %} {% endblock loginactive %}"
+                                href="{% url 'apps.usuarios:login' %}">Ingresar</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <form class="d-flex align-items-center flex-wrap justify-content-between w-100" method="POST"
+                    action="/search/">
+                    {% csrf_token %}
+                    <div class="d-flex me-3 mb-2 mb-lg-0">
+                        <input class="form-control me-2" type="search" placeholder="Buscar en la Web" name="searched"
+                            id="searched" aria-label="Search" style="width: 250px;">
+                        <button
+                            class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2"
+                            type="submit" style="width: 80px;">Buscar</button>
+                    </div>
+                    {% if user.is_authenticated %}
+                <div class="d-flex align-items-center" style="gap: 10px;">
+                        <!-- Ajusta el 'gap' para el espaciado -->
+                        <!-- Imagen de perfil -->
+                        <div class="me-2" style="margin-right: 5px;"> <!-- Ajusta el margen según necesites -->
+                            <img src="{% if user.profile.image %}{{ user.profile.image.url }}{% else %}{% static 'img/Grupo7.png' %}{% endif %}"
+                                alt="Profile Image" class="rounded-circle" style="width: 40px; height: 40px;">
+                        </div>
+                        <!-- Botón con el nombre del usuario (link a su perfil) -->
+                        <a href="{% url 'apps.usuarios:profile' %}"
+                            class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2"
+                            style="margin-right: 5px;">{{user.username }}</a>
+                        <!-- Botón para salir -->
+                        <a href="{% url 'apps.usuarios:logout' %}"
+                            class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2">Salir</a>
+                    </div>
+                    {% endif %}
+                </form>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid bg-dark py-1">
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="#footer"
+                class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2">Contacto</a>
+            <div class="text-white" id="date-time" style="text-align: right;">
+                <!-- Aquí se insertará la hora mediante JavaScript -->
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-dark py-3 mb-3">
+        <div class="row align-items-center bg-dark">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <!-- Aquí reemplazas "Novedades" por "Filtro" -->
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2" data-bs-toggle="dropdown" style="width: 120px;">
+                            Filtro
+                        </a>
+                        <div class="dropdown-menu rounded-0 m-0 bg-dark text-white">
+                            <a href="#" class="dropdown-item text-white">Ordenar por Fecha (más reciente primero)</a>
+                            <a href="#" class="dropdown-item text-white">Ordenar por Fecha (más antiguo primero)</a>
+                            <a href="#" class="dropdown-item text-white">Ordenar por Autor</a>
+                            <a href="#" class="dropdown-item text-white">Ordenar Alfabéticamente (A-Z)</a>
+                            <a href="#" class="dropdown-item text-white">Ordenar Alfabéticamente (Z-A)</a>
+                        </div>
+                    </div>                
+                    <div class="flex-grow-1 mx-3">
+                        <div class="owl-carousel tranding-carousel d-inline-flex align-items-center"
+                            style="overflow: hidden;">
+                            <div class="text-truncate">
+                                <span class="text-white text-uppercase font-weight-semi-bold">Siempre informado sobre
+                                    las noticias que inspiran y generan cambio. ¡Juntos hacemos la diferencia!</span>
+                            </div>
+                            <div class="text-truncate">
+                                <span class="text-white text-uppercase font-weight-semi-bold">Mantente al día con las
+                                    últimas noticias y eventos en G7News.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Columna principal de contenido -->
+                <div class="col-lg-9">
+                    <div class="watermark-container">
+                        <div class="watermark">
+                            {% for i in "123456789101112131415"|make_list %}
+                            <div class="watermark-item">
+                                <div class="watermark-text">
+                                    <span class="text-primary">G7</span>
+                                    <span class="text-secondary">News</span>
+                                    <img src="{% static 'img/Grupo7.png' %}" alt="Logo" class="watermark-logo">
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% block content %}
+                    {% endblock %}
+                </div>
+
+                <!-- Nueva columna de publicidad -->
+                <!-- Nueva columna de publicidad -->
+                <div class="col-lg-3">
+                    <div class="sticky-sidebar">
+                        <div class="post-container mb-4">
+                            <h4>Publicidad</h4>
+                            <!-- Aquí puedes agregar tus anuncios o imágenes publicitarias -->
+                            <img src="{% static 'img/news-800x500-2.jpg' %}" class="img-fluid mb-3" alt="Anuncio 1">
+                            <img src="{% static 'img/news-700x435-1.jpg' %}" class="img-fluid mb-3" alt="Anuncio 2">
+                            <img src="{% static 'img/news-700x435-4.jpg' %}" class="img-fluid mb-3" alt="Anuncio 3">
+                            <img src="{% static 'img/news-800x500-3.jpg' %}" class="img-fluid mb-3" alt="Anuncio 4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer id="footer" class="container-fluid bg-dark pt-5 px-sm-3 px-md-5 mt-5">
+        <div class="row justify-content-center">
+            <!-- Bloque de Contacto -->
+            <div class="col-lg-4 col-md-6 mb-5 text-center">
+                <h5 class="mb-4 text-white text-uppercase font-weight-bold">Contacto</h5>
+                <div class="social-media-links">
+
+                    <!-- Mapa interactivo -->
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3520.3196244347995!2d-58.98546042422256!3d-27.451677582882117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94450c42ab2f0739%3A0xa918b2d2b5b6eec!2sPlaza%2025%20de%20Mayo!5e0!3m2!1ses!2sar!4v1697621345880!5m2!1ses!2sar"
+                        width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                    <p class="font-weight-medium"><i class="fa fa-map-marker-alt mr-2"></i>Resistencia, Chaco, Argentina
+                    </p>
+                    <p class="font-weight-medium"><i class="fa fa-phone-alt mr-2"></i>+54 362 4123456</p>
+                    <!-- Correo electrónico interactivo -->
+                    <p class="font-weight-medium">
+                        <i class="fa fa-envelope mr-2"></i>
+                        <a href="mailto:g7.informatorio@gmail.com?subject=Consulta"
+                            class="text-white">g7.informatorio@gmail.com</a>
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-sm btn-secondary btn-lg-square mr-2" href="https://twitter.com/informatorioch"
+                            target="_blank">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a class="btn btn-sm btn-secondary btn-lg-square mr-2"
+                            href="https://www.facebook.com/informatorio.chaco/" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="btn btn-sm btn-secondary btn-lg-square mr-2"
+                            href="https://ar.linkedin.com/company/informatoriochaco" target="_blank">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a class="btn btn-sm btn-secondary btn-lg-square mr-2"
+                            href="https://www.instagram.com/informatorio/" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="btn btn-sm btn-secondary btn-lg-square" href="http://www.youtube.com/@informatorio-"
+                            target="_blank">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bloque de Desarrolladores -->
+            <div class="col-lg-4 col-md-6 mb-5 text-center">
+                <h5 class="mb-4 text-white text-uppercase font-weight-bold">Desarrolladores</h5>
+                <p class="mb-2">Emilio Rojas - Full Stack Developer</p>
+                <p class="mb-2">Agustín Roman - BackEnd</p>
+                <p class="mb-2">Luis Zampaino - BackEnd</p>
+                <p class="mb-2">Alejandro Suarez - FrontEnd</p>
+                <p class="mb-2">Pablo Aguirre - Full Stack Developer</p>
+                <p class="mb-2">Martín Sena - FrontEnd</p>
+            </div>
+
+            <!-- Bloque Sobre Nosotros -->
+            <div class="col-lg-4 col-md-6 mb-5 text-center">
+                <h5 class="mb-4 text-white text-uppercase font-weight-bold">Sobre Nosotros</h5>
+                <p class="text-white">G7News es un proyecto dedicado a brindar noticias actualizadas y relevantes a
+                    nuestra comunidad. Nuestro equipo de desarrolladores trabaja incansablemente para ofrecer una
+                    experiencia de usuario excepcional y contenido de calidad.</p>
+                <p class="text-white">Nos esforzamos por ser una fuente confiable de información, cubriendo una amplia
+                    gama de temas desde política hasta tecnología, siempre con un enfoque en la precisión y la
+                    objetividad.</p>
+            </div>
+        </div>
+    </footer>
+    <div class="container-fluid py-4 px-sm-3 px-md-5" style="background: #111111;">
+        <p class="m-0 text-center">&copy; <a href="#">G7News</a>. © Copyright 2024 G7News | Todos los derechos
+            reservados.
+
+            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+            Dirección Nacional del Derecho de Autor DNDA <a href="#">Queda prohibida la reproducción total o parcial
+                del presente diario.</a>
+        </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const formattedDate = now.toLocaleDateString('es-AR', {
+                day: '2-digit', month: '2-digit', year: 'numeric'
+            });
+            const formattedTime = now.toLocaleTimeString('es-AR', {
+                hour: '2-digit', minute: '2-digit'
+            });
+            document.getElementById('date-time').textContent = formattedDate + ' ' + formattedTime;
+        }
+
+        // Actualizar la hora cada segundo
+        setInterval(updateDateTime, 1000);
+
+        // Llamar a la función inmediatamente para mostrar la hora actual
+        updateDateTime();
+
+        // Configuración del carrusel
+        $(document).ready(function () {
+            $('.owl-carousel').owlCarousel({
+                items: 1, // número de elementos a mostrar
+                loop: true, // hacer que el carrusel se repita indefinidamente
+                autoplay: true, // activa el desplazamiento automático
+                autoplayTimeout: 3000, // tiempo entre cada desplazamiento (milisegundos)
+                autoplayHoverPause: false, // no detener al pasar el cursor
+                nav: false, // desactivar los botones de navegación
+                dots: false // desactivar los puntos de paginación
+            });
+        });
+    </script>
+    {% block js %}
+    {% endblock %}
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %} Edit Blog Post {% endblock %}
+
+{% block css %}
+<style>
+  .edit {
+    float: right;
+  }
+  .comment-section {
+    margin-top: 20px;
+  }
+  .comment-card {
+    margin-bottom: 15px;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<form enctype="multipart/form-data" method="POST"> {% csrf_token %}
+<div class="container mt-4">
+{{ form.as_p }}
+<button class="btn btn-primary">Actualizar Blog</button>
+</div>
+</form>
+{% endblock %}
+
+
+

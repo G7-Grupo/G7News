@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %} Delete Blog Post {% endblock %}
+
+{% block css %}
+{% endblock %}
+{% block content %}    
+<form enctype="multipart/form-data" method="POST"> {% csrf_token %}
+<div class="col-lg-4 my-4">
+    <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">¿Estás seguro de que quieres eliminar este blog?</h5>
+          <form action="" method="POST">				
+            {% csrf_token %}
+          <a href="/" class="btn btn-success">Cancelar</a>
+          <button class="btn btn-danger">Borrar Blog</button>
+        </div>
+      </div>
+</div>
+</form>
+{% endblock %}
+
+
+
