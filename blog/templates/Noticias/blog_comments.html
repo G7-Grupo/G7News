@@ -56,17 +56,17 @@ float: right;
                         <div class="card-header">
                               <span style="font-size: 22px;">{{comment.user}} </span> 
                               <span style="font-size: 12px;">{{comment.dateTime | naturaltime}}</span>
-                              {% if user.is_authenticated and user == comment.user or user_is_colaborador %}
-                                    <form method="get" action="{% url 'apps.Noticias:edit_comment' comment.id %}" style="display:inline;">
-                                          {% csrf_token %}
-                                          <button type="submit" class="btn btn-success">Edit Comment</button>
+                        {% if user.is_authenticated and user == comment.user or user_is_colaborador %}
+                              <form method="get" action="{% url 'apps.Noticias:edit_comment' comment.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success">Edit Comment</button>
 
-                                    </form>
-                                    <form method="get" action="{% url 'apps.Noticias:delete_comment' comment.id %}" style="display:inline;">
-                                          {% csrf_token %}
-                                          <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
-                              {% endif %}
+                              </form>
+                              <form method="get" action="{% url 'apps.Noticias:delete_comment' comment.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                              </form>
+                        {% endif %}
                         </div>
                         <div class="card-body">
                               <h6 class="card-text">{{comment.content}}</h6>

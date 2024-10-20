@@ -1,4 +1,5 @@
 {% load static %}
+
 <script type="text/javascript" src="{{ STATIC_URL }} /static/jquery-1.8.0.js"></script>
 
 <!doctype html>
@@ -53,38 +54,42 @@
                             <a class="nav-link {% block homeactive %} {% endblock homeactive %}" aria-current="page"
                                 href="/">Home</a>
                         </li>
+                        
+                        
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categorías</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categorías</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                {% for categoria in categorias %}
-                                    <a href="{% url 'apps.Noticias:categoria_detail' post.categoria %}" class="dropdown-item">{{ post.categoria}}</a>
-                                {% empty %}
-                                    <p class="dropdown-item">No categories available</p>
-                                {% endfor %}
+                                <a href="#" class="dropdown-item">Política 🏛️</a>
+                                <a href="#" class="dropdown-item">Deportes 🏆</a>
+                                <a href="#" class="dropdown-item">Salud ⚕️</a>
+                                <a href="#" class="dropdown-item">Ciencia ⚗️</a>
+                                <a href="#" class="dropdown-item">Tecnología 👨‍💻</a>
+                                <a href="#" class="dropdown-item">Rincón Gamer 🎮</a>
                             </div>
                         </div>
-                        
                         {% if user.is_authenticated %}
-                            {% if user_is_colaborador or user.is_superuser %}
-                                <li class="nav-item">
-                                    <a class="nav-link {% block add_blogs_active %} {% endblock add_blogs_active %}"
-                                        href="{% url 'apps.Noticias:add_blogs' %}">Add Blogs</a>
-                                </li>
-                                
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'apps.Noticias:add_Categoria' %}">Add Category</a>
-                                </li>
+                            {% if user.is_superuser or user_is_colaborador %}
+                            <li class="nav-item">
+                                <a class="nav-link {% block add_blogs_active %} {% endblock add_blogs_active %}"
+                                    href="{% url 'apps.Noticias:add_blogs'  %}">Add Blogs</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link"  href="{% url 'apps.Noticias:add_Categoria'  %}">Add Category</a>
+                            </li>
                             {% endif %}
+                        
                         {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link {% block registeractive %} {% endblock registeractive %}"
-                                    href="{% url 'apps.usuarios:register' %}">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {% block loginactive %} {% endblock loginactive %}"
-                                    href="{% url 'apps.usuarios:login' %}">Login</a>
-                            </li>
-                        {% endif %}                       
+                        
+                        <li class="nav-item">
+                            <a class="nav-link {% block registeractive %} {% endblock registeractive %}"
+                                href="{% url 'apps.usuarios:register' %}">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% block loginactive %} {% endblock loginactive %}"
+                                href="{% url 'apps.usuarios:login' %}">Login</a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
                 <form class="d-flex" method="POST" action="{% url 'apps.Noticias:search'  %}"> {% csrf_token %}
@@ -120,6 +125,7 @@
     {% endblock %}
     {% block content %}
     {% endblock %}
+   
     <main>
  
         <footer class="container-fluid bg-dark pt-5 px-sm-3 px-md-5 mt-5">
@@ -257,4 +263,3 @@
     </body>
     
     </html>
-    

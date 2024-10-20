@@ -59,7 +59,7 @@ def Register(request):
 
 
         
-        return redirect(request, 'usuarios/login.html')   
+        return redirect( 'usuarios/login.html')   
     return render(request, "usuarios/register.html")
 
 

@@ -6,6 +6,9 @@ from .forms import BlogPostForm
 from django.views.generic import UpdateView
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.models import Group
+
+
 
 
 def blogs(request):
@@ -21,6 +24,7 @@ def blogs(request):
         'user_is_colaborador': user_is_colaborador,
     }
     return render(request, 'Noticias/blog.html', context)
+
 
 def some_view(request, cats):
     categoria_instance = get_object_or_404(Categoria, name=cats)
@@ -48,16 +52,14 @@ def blogs_comments(request, slug):
     return render(request, 'Noticias/blog_comments.html', context)
 
 
-
 @login_required(login_url='/login')
 def Delete_comment(request, comment_id):
-    
-    comment = get_object_or_404(Comment, id=comment_id, user=request.user)
-        
-    if request.method == "POST":
-        comment.delete()  
-        return redirect(reverse('Noticias:blogs_comments', kwargs={'slug': comment.blog.slug}))
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('Noticias:blogs_comments', slug=comment.blog.slug)
     return render(request, 'Noticias/delete_comment.html', {'comment': comment})
+    
 
 @login_required(login_url='/login')
 def Delete_Blog_Post(request, pk):
@@ -127,7 +129,8 @@ def CategoriasView(request, cats):
     categoria_posts = BlogPost.objects.filter(categoria=categoria_instance)
     return render(request, 'Noticias/categorias.html',{'cats':cats, 'categoria_posts':categoria_posts})
    
-def blogs(request):
+
+def Filterblogs(request):
     sort_by = request.GET.get('sort', 'dateTime')  # Default to sorting by dateTime
     order = request.GET.get('order', 'desc')  # Default to descending order
 
@@ -150,4 +153,6 @@ def blogs(request):
         # Fallback, in case of unexpected input
         blog_posts = BlogPost.objects.order_by('-dateTime')
 
-    return render(request, 'Noticias/blog.html', {'posts': blog_posts})
+    user_is_colaborador = request.user.groups.filter(name='Colaborador').exists()
+
+    return render(request, 'Noticias/blog.html', {'posts': blog_posts, 'sort': sort_by, 'order': order, 'user_is_colaborador': user_is_colaborador, })
