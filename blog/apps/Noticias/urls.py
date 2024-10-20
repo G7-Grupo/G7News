@@ -1,7 +1,7 @@
 
 from django.urls import path
 from . import views
-from .views import UpdatePostView, AddCategoriaView,UpdateCommentView, CategoriasView
+from .views import UpdatePostView, AddCategoriaView,UpdateCommentView, CategoriasView,some_view
 
 app_name = 'apps.Noticias'
 
@@ -16,6 +16,7 @@ urlpatterns = [
     path("delete_comment/<int:comment_id>/", views.Delete_comment, name="delete_comment"),
     path("edit_comment/<int:comment_id>/", UpdateCommentView.as_view(), name="edit_comment"),
     path("categorias/<str:cats>/", CategoriasView, name= "categorias"),
+    path('categoria/<str:cats>/', some_view, name='categorias_detail'),
     
    
     path("search/", views.search, name="search"),

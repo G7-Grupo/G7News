@@ -22,6 +22,10 @@ def blogs(request):
     }
     return render(request, 'Noticias/blog.html', context)
 
+def some_view(request, cats):
+    categoria_instance = get_object_or_404(Categoria, name=cats)
+    categoria_posts = BlogPost.objects.filter(categoria=categoria_instance)
+    return render(request, 'base.html',{'cats':cats, 'categoria_posts':categoria_posts})
 
 def blogs_comments(request, slug):
     post = get_object_or_404(BlogPost, slug=slug)
