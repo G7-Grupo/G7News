@@ -31,7 +31,8 @@
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
 
-
+{% block cs%}
+{% endblock %}
 
 </head>
 
@@ -118,20 +119,32 @@
             </div>
         </div>
     </nav>
-    
 
-    {% block body %}
-    {% endblock %}
-    {% block content %}
-    {% endblock %}
-   
+    <div class="container-fluid bg-dark py-1">
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="#footer"
+                class="nav-link btn btn-outline-primary bg-primary text-dark text-center font-weight-medium py-2">Contacto</a>
+            <div class="text-white" id="date-time" style="text-align: right;">
+                <!-- Aquí se insertará la hora mediante JavaScript -->
+            </div>
+        </div>
+    </div>    
     <main>
- 
-        <footer class="container-fluid bg-dark pt-5 px-sm-3 px-md-5 mt-5">
-            <div class="row justify-content-center">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Columna principal de contenido -->
+                <div class="col-lg-9">
+
+                    {% block content %}
+                    {% endblock %}
+
+    </main>    
+    <footer id="footer" class="container-fluid bg-dark pt-5 px-sm-3 px-md-5 mt-5">
+        <div class="row justify-content-center">
                 <!-- Bloque de Contacto -->
                 <div class="col-lg-4 col-md-6 mb-5 text-center">
                     <h5 class="mb-4 text-white text-uppercase font-weight-bold">Contacto</h5>
+                <div class="social-media-links"></div>
     
                     <!-- Mapa interactivo -->
                     <iframe
@@ -193,6 +206,7 @@
                         objetividad.</p>
                 </div>
             </div>
+
         </footer>
         <div class="container-fluid py-4 px-sm-3 px-md-5" style="background: #111111;">
             <p class="m-0 text-center">&copy; <a href="#">G7News</a>. © Copyright 2024 G7News | Todos los derechos
