@@ -14,6 +14,7 @@ from django.contrib.auth.models import Group
 def blogs(request):
     print("Entrando a la vista blogs") 
     posts = BlogPost.objects.all().order_by('-dateTime')
+    
     print(f"Posts: {posts}")  
     user_is_colaborador = False
     if request.user.is_authenticated:
@@ -21,6 +22,7 @@ def blogs(request):
 
     context = {
         'posts': posts,
+    
         'user_is_colaborador': user_is_colaborador,
     }
     return render(request, 'Noticias/blog.html', context)

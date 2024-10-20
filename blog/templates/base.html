@@ -59,12 +59,11 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categorías</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="#" class="dropdown-item">Política 🏛️</a>
-                                <a href="#" class="dropdown-item">Deportes 🏆</a>
-                                <a href="#" class="dropdown-item">Salud ⚕️</a>
-                                <a href="#" class="dropdown-item">Ciencia ⚗️</a>
-                                <a href="#" class="dropdown-item">Tecnología 👨‍💻</a>
-                                <a href="#" class="dropdown-item">Rincón Gamer 🎮</a>
+                                {% for categoria in categorias %}
+                                    <a href="{% url 'apps.Noticias:categorias' categoria.name %}" class="dropdown-item">
+                                        {{ categoria.name }}
+                                    </a>
+                                {% endfor %}
                             </div>
                         </div>
                         {% if user.is_authenticated %}

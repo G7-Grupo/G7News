@@ -59,7 +59,7 @@ def Register(request):
 
 
         
-        return redirect( 'usuarios/login.html')   
+        return redirect( 'apps.usuarios:login')   
     return render(request, "usuarios/register.html")
 
 
@@ -83,4 +83,4 @@ def Login(request):
 def Logout(request):
     logout(request)
     messages.success(request, "Successfully logged out")
-    return redirect('/usuarios/login')
+    return redirect('apps.usuarios:login')
