@@ -1,0 +1,17 @@
+# Obligatorios: 
+entorno/ 
+# Entorno virtual de Python
+__pycache__/
+
+*.pyc
+# Archivos compilados de Python esta compilación se hace especializada para la PC en la que se creó el archivo cache y por eso no tiene sentido subirla al repositorio porque no servirá para nada pC de alguien más y podría causar algún problema
+
+
+
+# Por si acaso:
+*.bak       
+# Archivos de respaldo
+*.tmp       
+# Archivos temporales
+Thumbs.db   
+# Caché de imágenes en Windows
