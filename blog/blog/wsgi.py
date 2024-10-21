@@ -8,9 +8,16 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/wsgi/
 """
 
 import os
-
+import sys
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blog.settings')
+#Añade la ruta de tu proyecto al sys.path
+path = '/home/GrupoSiete/G7News/blog'
+if path not in sys.path:
+    sys.path.append(path)
 
+#Establece el módulo de configuración de Django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blog.settings.production')
+
+#Obtiene la aplicación WSGI
 application = get_wsgi_application()

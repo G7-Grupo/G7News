@@ -6,8 +6,21 @@
 {% block css %}
 <style>
     .custom-card {
-        max-width: 300px; /* Adjust as needed */
-        margin: auto; /* Center the cards */
+        max-width: 300px; /* Ajusta según sea necesario */
+        margin: auto; /* Centra las tarjetas */
+    }
+    .card-img-top {
+        width: 100%;
+        height: auto;
+        object-fit: cover; /* Mantiene la proporción de la imagen y la recorta si es necesario */
+        max-height: 200px; /* Limita la altura para que sea uniforme */
+    }
+
+    /* Para las imágenes de publicidad */
+    .img-fluid {
+        width: 100%;
+        height: auto;
+        object-fit: cover; /* Asegura que las imágenes mantengan su aspecto */
     }
 </style>
 {% endblock %}
@@ -48,7 +61,7 @@
                 <a href="{% url 'apps.Noticias:categorias' post.categoria %}" class="btn btn-primary">{{ post.categoria }}</a>
                 <div class="card-body">
                     <h5 class="card-title">{{ post.title }} <br><small>por {{ post.author }} Published on: {{ post.dateTime }}</small></h5>
-                    <p class="card-text">{{ post.content|truncatechars:210 }}</p>
+                    <p class="card-text">{{ post.content|truncatechars:100 }}</p>
                     <a href="{% url 'apps.Noticias:blogs_comments' post.slug %}" class="btn btn-primary">Leer más</a>
                 
                     {% if user.is_authenticated and user_is_colaborador %}
@@ -68,10 +81,10 @@
       <div class="sticky-sidebar">
           <div class="post-container mb-4">
               <h4>Publicidad</h4>
-              <img src="{% static 'img/news-800x500-2.jpg' %}" class="img-fluid mb-3" alt="Anuncio 1">
-              <img src="{% static 'img/news-700x435-1.jpg' %}" class="img-fluid mb-3" alt="Anuncio 2">
-              <img src="{% static 'img/news-700x435-4.jpg' %}" class="img-fluid mb-3" alt="Anuncio 3">
-              <img src="{% static 'img/news-800x500-3.jpg' %}" class="img-fluid mb-3" alt="Anuncio 4">
+              <img src="{% static 'img/news-110x110-1.jpeg' %}" class="img-fluid mb-3" alt="Anuncio 1">
+              <img src="{% static 'img/mercado.jpg' %}" class="img-fluid mb-3" alt="Anuncio 2">
+              <img src="{% static 'img/GL8O28hXkAAoCaU.jpg' %}" class="img-fluid mb-3" alt="Anuncio 3">
+              <img src="{% static 'img/8fe2fdd3-logo-de-heineken.jpg' %}" class="img-fluid mb-3" alt="Anuncio 4">
           </div>
       </div>
     </div>

@@ -3,9 +3,27 @@
 {% block title %} Blogs {% endblock %}
 
 {% block css %}
-.edit{
-float: right;
-}
+<style>
+    /* Asegurar que las imágenes mantengan su aspecto y sean responsivas */
+    img {
+        max-width: 100%;
+        height: auto; /* Mantiene la proporción original de la imagen */
+        display: block;
+        margin: 0 auto; /* Centra las imágenes */
+    }
+
+    /* Asegurar que las imágenes del post sean responsivas */
+    .post-image {
+        width: 100%;
+        height: auto;
+        object-fit: contain; /* Mantiene el aspecto de la imagen */
+        max-height: 700px; /* Limitar la altura máxima */
+    }
+
+    .edit {
+        float: right;
+    }
+</style>
 {% endblock %}
 {% block content %}
 {% load humanize %}
@@ -28,7 +46,7 @@ float: right;
             </div>
       </div>
       <br>
-      <img src="/media/{{post.image}}" alt="" height=700px width=700px>
+      <img src="/media/{{post.image}}" alt="" class="post-image">
       <br>
       <p>{{post.content}}.</p>
       <hr>

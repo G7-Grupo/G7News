@@ -1,13 +1,13 @@
-
+from .base import *
 
 #OCULTAR ESTA CLAVE
 SECRET_KEY = 'django-insecure-%ujzgm923y)sew7b&08$e(+m%jx6*jb$11-5wd@f=q+p=*lk+('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 #DOMINIO PERMITIDO, EJE: www.informatorio.com.ar
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gruposiete.pythonanywhere.com']
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
