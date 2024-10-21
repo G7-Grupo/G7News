@@ -89,7 +89,8 @@ def search(request):
     if request.method == "POST":
         searched = request.POST ['searched']
         posts = BlogPost.objects.filter(title__contains=searched)
-        return render(request, "Noticias/search.html", {'searched':searched, 'posts':posts})
+        user_is_colaborador = request.user.groups.filter(name='Colaborador').exists()
+        return render(request, "Noticias/search.html", {'searched':searched, 'posts':posts, 'user_is_colaborador': user_is_colaborador})
     else:
         return render(request, "Noticias/search.html", {})
 
